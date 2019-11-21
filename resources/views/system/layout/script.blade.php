@@ -1,10 +1,3 @@
-<script>
-    var base_api_url = '{{ env('SB_API_URL', 'http://shopbay.service') }}';
-    var app_url = '{{ env('APP_URL', 'http://localhost') }}';
-    var sbOptions = {!! json_encode($GLOBALS['shopbay_options'])  !!};
-
-</script>
-
 <script src="/system/js/scripts/jquery.min.js"></script>
 <script src="/system/js/scripts/chosen-add-option.js"></script>
 <script src="/system/js/scripts/bootstrap.min.js"></script>
@@ -28,7 +21,6 @@
 <script src="/system/js/scripts/toastr.min.js"></script>
 <script src="/system/js/scripts/jquery-ui.min.js"></script>
 <script src="/system/js/scripts/sortable.min.js"></script>
-
 
 <script>
     $(document).on('collapsed.pushMenu', function (){

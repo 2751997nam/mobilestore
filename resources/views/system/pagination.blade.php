@@ -3,7 +3,7 @@
     <li
         ng-repeat="n in range(1, meta.page_count)"
         ng-click="changePage(n)"
-        ng-class="meta.page_id === n - 1 ? 'active' : ''"
+        ng-class="meta.page_id == n - 1 ? 'active' : ''"
     >
         <a href="javascript:void(0)">@{{ n }}</a>
     </li>
@@ -15,7 +15,7 @@
     <li
         ng-repeat="n in range(1, 4)"
         ng-click="changePage(n)"
-        ng-class="meta.page_id === n - 1 ? 'active' : ''"
+        ng-class="meta.page_id == n - 1 ? 'active' : ''"
     >
         <a href="javascript:void(0)">@{{ n }}</a>
     </li>
@@ -35,7 +35,7 @@
     <li
         ng-repeat="n in range(meta.page_id, meta.page_id + 2)"
         ng-click="changePage(n)"
-        ng-class="meta.page_id === n - 1 ? 'active' : ''"
+        ng-class="meta.page_id == n - 1 ? 'active' : ''"
     >
         <a href="javascript:void(0)">@{{ n }}</a>
     </li>
@@ -55,7 +55,7 @@
     <li
         ng-repeat="n in range(meta.page_count - 2, meta.page_count)"
         ng-click="changePage(n)"
-        ng-class="meta.page_id === n - 1 ? 'active' : ''"
+        ng-class="meta.page_id == n - 1 ? 'active' : ''"
     >
         <a href="javascript:void(0)">@{{ n }}</a>
     </li>

@@ -1,8 +1,6 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="shopbay-token" content="{{ ( Session::has('ssoToken') ) ? Session::get('ssoToken') : ''}}">
-    <meta name="shop-uuid" content="{{ env('SHOP_UUID', '') }}" >
     @yield('title')
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <link rel="stylesheet" href="/system/css/bootstrap.min.css">

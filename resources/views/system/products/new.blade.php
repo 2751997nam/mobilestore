@@ -23,6 +23,84 @@
                 width: 60%;
             }
         }
+
+        .sb-variants-menu a {
+            margin-left: 15px;
+        }
+
+        .sb-bulk-select span,
+        .sb-bulk-select a {
+            margin-right: 10px;
+        }
+
+        .option-0,
+        .variant-option-1 {
+            color: #95a7b7
+        }
+
+        .option-1,
+        .variant-option-1 {
+            color: #29bc94;
+        }
+
+        .option-2,
+        .variant-option-2 {
+            color: #763eaf;
+        }
+
+        .option-3,
+        .variant-option-3 {
+            color: #ff9517;
+        }
+
+        .sb-variants .form-control {
+            border: 1px solid #d2d6de;
+        }
+
+        .sb-variants tr:hover .form-control {
+            border: 1px solid #d2d6de;
+        }
+        .btn-close-box {
+            position: relative;
+            font-size: 17px!important;
+            font-weight: normal!important;
+            padding: 1px 10px !important;
+        }
+        button.close {
+            position: absolute;
+            top: -6px;
+            right: -7px;
+            padding: 0px;
+            display: inline-block;
+            line-height: 10px;
+            opacity: 1;
+            color: white;
+            font-size: 16px;
+            font-weight: 200;
+            margin-right: 10px;
+            margin-top: 6px;
+        }
+        .bgGreen {
+            position: relative;
+            margin: 3px 0 3px 5px;
+            padding: 3px 5px 3px 5px;
+            border: 1px solid #aaa;
+            border-radius: 3px;
+            background-color: #e4e4e4;
+            background-image: -webkit-gradient(linear,50% 0,50% 100%,color-stop(20%,#f4f4f4),color-stop(50%,#f0f0f0),color-stop(52%,#e8e8e8),color-stop(100%,#eee));
+            background-image: -webkit-linear-gradient(#f4f4f4 20%,#f0f0f0 50%,#e8e8e8 52%,#eee 100%);
+            background-image: -moz-linear-gradient(#f4f4f4 20%,#f0f0f0 50%,#e8e8e8 52%,#eee 100%);
+            background-image: -o-linear-gradient(#f4f4f4 20%,#f0f0f0 50%,#e8e8e8 52%,#eee 100%);
+            background-image: linear-gradient(#f4f4f4 20%,#f0f0f0 50%,#e8e8e8 52%,#eee 100%);
+            background-clip: padding-box;
+            box-shadow: 0 0 2px #fff inset, 0 1px 0 rgba(0,0,0,.05);
+            color: #333;
+            line-height: 13px;
+            cursor: default;
+        }
+        .chosen-container-single, .chosen-container-multi {
+            width: 100%!important;
+        }
     </style>
 @endsection
 @section('header')
@@ -30,17 +108,11 @@
 @endsection
 @section('script')
     <script>
-        var productId = '<?= isset($id) ? $id : request()->query("clone") ?>';
-        var isCloning = '{{ request()->query("clone") ? 1 : 0 }}';
+        var productId = '<?= isset($id) ? $id : '' ?>';
     </script>
-    <script src="/vendor/laravel-filemanager/js/lfm.js"></script>
     <script src="/system/js/scripts/combinatorics.js?v=<?=env('APP_VERSION')?>" charset="utf-8"></script>
     <script src="/system/js/scripts/ckeditor/ckeditor.js?v=<?=env('APP_VERSION')?>" charset="utf-8"></script>
     <script src="/system/js/controllers/product-controller.js?v=<?=env('APP_VERSION')?>" charset="utf-8"></script>
-    <script>
-        $('.lfm').filemanager('image');
-    </script>
-    @view('system.products.inc.product-addon-script')
 @endsection
 @section('content')
 <div class="content">
@@ -57,19 +129,15 @@
             </div>
             <div ng-show="isPage">
                 <div class="title">
-                    <h3 ng-show="mode == 'create'">@{{ isClone ? 'Sao chép sản phẩm' : 'Thêm sản phẩm' }}</h3>
+                    <h3 ng-show="mode == 'create'">Thêm sản phẩm</h3>
                     <h3 ng-show="mode == 'update'">Sửa sản phẩm</h3>
                 </div>
                 <div class="product-container">
                     <div class="row">
                         <div class="col-md-9">
                             @include('system.products.inc.product-title')
-                            @view('system.products.inc.product-addon')
-                            @include('system.products.inc.product-images')
                             @include('system.products.inc.product-inventory')
-                            @include('system.products.inc.product-variants')
-                            @include('system.products.inc.product-attribute')
-                            @include('system.products.inc.product-seo')
+                            @include('system.products.inc.product-images')
                         </div>
                         <div class="col-md-3">
                             @include('system.products.inc.product-organization')

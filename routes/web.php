@@ -14,3 +14,13 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::group(['prefix' => '/admin', 'as' => 'admin.', 'namespace' => '\\System'], function () {
+    Route::get('/', 'IndexController@index');
+    Route::get('/{module}', 'IndexController@module')->name('system::module');
+    Route::get('/{module}/{subModule}', 'IndexController@subModule')->name('system::submodule');
+});
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

@@ -20,7 +20,7 @@
                 <img src="/system/images/no-avatar.png" class="img-circle" alt="User Image">
             </div>
             <div class="pull-left info">
-                <p>{{ Auth::user()->name ? Auth::user()->name : "Quản trị viên" }}</p>
+                <p>{{ Auth::user() ? Auth::user()->name : "Quản trị viên" }}</p>
                 <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
             </div>
         </div>

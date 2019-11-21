@@ -3,8 +3,11 @@ system.controller('PaginationController', PaginationController)
 function PaginationController($scope, $http, $rootScope) {
     this.__proto__ = new BaseController($scope, $http, $rootScope);
     $scope.meta = {
-        'page_id': 0,
-        'page_size': 20
+        total_count: 0,
+        page_size: 20,
+        page_id: 0,
+        has_next: false,
+        page_count: 0
     };
 
     $scope.range = function (min, max) {

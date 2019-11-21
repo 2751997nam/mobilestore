@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
-use Megaads\Apify\Models\BaseModel;
+use Illuminate\Database\Eloquent\Model;
 
-class ProductGallery extends BaseModel
+class ProductGallery extends Model
 {
 
     use \App\Models\Multitenantable;

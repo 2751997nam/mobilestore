@@ -13,6 +13,22 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+// Route::middleware('auth:api')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
+
+Route::group(['prefix' => '/', 'namespace' => '\\Api'], function () {
+    Route::group(['prefix' => 'product', 'as' => 'product.'], function () {
+        Route::get('/', 'ProductController@index');
+        Route::post('/', 'ProductController@store');
+        Route::post('/upload-image', 'ProductController@uploadImage');
+    });
+    
+    Route::group(['prefix' => 'category', 'as' => 'category.'], function () {
+        Route::get('/', 'CategoryController@index');
+    });
+
+    Route::group(['prefix' => 'brand', 'as' => 'brand.'], function () {
+        Route::get('/', 'BrandController@index');
+    });
 });

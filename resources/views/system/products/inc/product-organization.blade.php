@@ -28,7 +28,7 @@
                 <div class="input-group" style="width: 100%;">
                     <select class="form-control"
                         ng-model="product.status"
-                        ng-options="status.name for status in statusses">
+                        ng-options="status.value as status.name for status in statuses">
                     </select>
                 </div>
             </div>
@@ -39,8 +39,8 @@
                 <select class="form-control chosen-select"
                         multiple
                         chosen
-                        persistent-create-option="true"
-                        skip-no-results="true"
+                        {{-- persistent-create-option="true" --}}
+                        {{-- skip-no-results="true" --}}
                         ng-model="product.categories"
                         ng-change="chooseCategories()"
                         ng-options="category.name for category in categories track by category.id">
@@ -61,22 +61,5 @@
                 </select>
             </div>
         </div>
-        <div class="box-body with-border">
-            <div class="form-group">
-                <label for="">Tags</label>
-                <select class="form-control chosen-select"
-                        multiple
-                        chosen
-                        create-option-text="'Tạo thêm tag'"
-                        persistent-create-option="true"
-                        create-option="createTag"
-                        ng-model="product.tags"
-                        ng-options="tag.title for tag in tags track by tag.id">
-                </select>
-            </div>
-
-
-        </div>
-        <br>
     </form>
 </div>

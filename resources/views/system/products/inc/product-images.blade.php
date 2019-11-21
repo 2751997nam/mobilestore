@@ -78,7 +78,7 @@
             <br/><br/>
             <div class="text-center" id="images" ng-if="gallery.length > 0">
                 <div class="sb_image" ng-repeat="image in gallery">
-                    <img ng-src="{{ getImageCdn(image.image_url, <?=$width * 2 ?>, <?=$width * 2 ?>) }}" class="image" style="width:100%">
+                    <img ng-src="@{{ image.image_url }}" class="image" style="width:100%">
                     <div class="middle">
                         <button type="button" name="button" class="btn btn-default btm-sm" ng-click="chooseAvatar($index);" title="Đặt làm ảnh đại diện"><i class="fa fa-star"></i></button>
                         <button type="button" name="button" class="btn btn-default btm-sm" ng-click="removeImage($index);" title="Xóa ảnh này"><i class="fa fa-trash"></i></button>

@@ -7,11 +7,10 @@
  */
 
 namespace App\Models;
-use Kalnoy\Nestedset\NodeTrait;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 
-class Category extends \Megaads\Apify\Models\BaseModel {
-    use NodeTrait;
+class Category extends Model {
     protected $table = "category";
 
     protected $fillable = [
@@ -21,8 +20,6 @@ class Category extends \Megaads\Apify\Models\BaseModel {
     protected $appends = [
         'url'
     ];
-
-    use \App\Models\Multitenantable;
 
     public function meta() {
         return $this->hasMany('App\Models\CategoryMeta', 'category_id', 'id');

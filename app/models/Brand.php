@@ -2,12 +2,10 @@
 
 namespace App\Models;
 
-use Megaads\Apify\Models\BaseModel;
+use Illuminate\Database\Eloquent\Model;
 
-class Brand extends BaseModel
+class Brand extends Model
 {
-
-    use \App\Models\Multitenantable;
 
     protected $table = 'brand';
 
@@ -17,7 +15,6 @@ class Brand extends BaseModel
         'image_url',
         'description',
         'sorder',
-        'shop_uuid'
     ];
 
     public function products()

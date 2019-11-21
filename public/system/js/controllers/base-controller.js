@@ -573,11 +573,6 @@ function BaseController($scope, $http, $rootScope, Upload) {
         });
     };
 
-    $scope.buildUrl = function (url) {
-        url = base_api_url + url;
-        return url;
-    }
-
     $scope.buildDeleteUrl = function (url, ids) {
         url = url + '?filters=id={';
         for (var i = 0; i < ids.length; i++) {
@@ -587,8 +582,6 @@ function BaseController($scope, $http, $rootScope, Upload) {
             }
         }
         url += '}';
-
-        url = $scope.buildUrl(url);
 
         return url;
     }

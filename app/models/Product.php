@@ -7,17 +7,11 @@ use App\Models\TagRefer;
 use App\Models\ProductSku;
 use App\Models\ProductSkuValue;
 use Illuminate\Support\Facades\DB;
-use Megaads\Apify\Models\BaseModel;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Product extends BaseModel
+class Product extends Model
 {
-
-    use \App\Models\Multitenantable;
-
-    use SoftDeletes;
-
     protected $table = 'product';
 
     protected $fillable = [
@@ -40,8 +34,7 @@ class Product extends BaseModel
     protected $variantDefault = null;
 
     protected $appends = [
-        'url', 'editUrl', 'variant_default', 'is_new', 'display_price', 'display_high_price',
-        'sale_percent', 'display_drop_price', 'brand', 'attributes'
+        'display_price', 'display_high_price',
     ];
 
     const DAY_OF_NEW = 10;
@@ -79,69 +72,12 @@ class Product extends BaseModel
         return "/" . (!empty($this->slug) ? $this->slug : "san-pham") . "-p" . $this->id . ".html";
     }
 
-    public function getEditUrlAttribute () {
-        return "/admin/products/" . $this->id;
+    public function getDisplayPriceAttribute () {
+        return formatPrice($this->price);
     }
 
-    public function getIsNewAttribute(){
-        $createdTime = date_create($this->created_at);
-        $interval = date_diff($createdTime, date_create(date("Y-m-d H:i:s")));
-        return ($interval->format("%a") < self::DAY_OF_NEW);
-    }
-
-    public function getImageUrlAttribute($value){
-        return ($value) ? $value : 'https://s3.shopbay.vn/files/2/system/product-image-placeholder.png';
-    }
-
-    public function getVariantDefaultAttribute() {
-        return $this->getDefautVariant();
-    }
-
-    public function getDisplayPriceAttribute() {
-        if ($this->price > 0) {
-            return number_format($this->price, 0, ',', '.').' ₫';
-        } else {
-            return "Liên hệ";
-        }
-    }
-
-    public function getDisplayHighPriceAttribute() {
-        return number_format($this->high_price, 0, ',', '.').' ₫';
-    }
-
-    private function getDefautVariant() {
-        $variants = ProductSku::where('product_id', '=', $this->id)
-                                ->orderBy('id', 'ASC')
-                                ->get(['id', 'sku', 'price', 'high_price', 'image_url']);
-        $retVal = [];
-        if (count($variants) > 0) {
-            $retVal = $variants[0];
-        }
-        return $retVal;
-    }
-
-    public function getBrandAttribute(){
-        return Brand::where('id', '=', $this->brand_id)->first();
-    }
-
-    public function orders()
-    {
-        return $this->belongsToMany(Order::class, 'order_item')->withPivot(['quantity', 'price'])->withTimestamps();
-    }
-
-    public function getSalePercentAttribute () {
-        if ($this->high_price && $this->price && $this->high_price > 0) {
-            $salePercent = round(($this->high_price - $this->price) / $this->high_price * 100);
-            if ($salePercent > 0) {
-                return "-$salePercent%";
-            }
-        }
-
-        return null;
-    }
-
-    public function getDisplayDropPriceAttribute () {
-        return number_format($this->high_price - $this->price, 0, ',', '.').' ₫';
+    public function getDisplayHighPriceAttribute () {
+        return formatPrice($this->high_price);
     }
 
     protected static function boot()
@@ -168,27 +104,5 @@ class Product extends BaseModel
                 $builder->orderBy('product.id', 'desc');
             });
         }
-    }
-
-    public function filterValues()
-    {
-        return $this->belongsToMany(FilterValue::class, 'filter_value_n_product');
-    }
-
-    public function getAttributesAttribute () {
-        $retval = [];
-        $attributes = DB::table('product_meta')->where('product_id', $this->id)->get();
-        foreach ($attributes as $key => $value) {
-            $retval[$value->key] = $value->value;
-            if($value->value){
-                if ($value->value[0] == '[' || $value->value[0] == '{') {
-                    $valueJson =  json_decode($value->value);
-                    if (json_last_error() === JSON_ERROR_NONE) {
-                        $retval[$value->key] = $valueJson;
-                    }
-                }
-            }
-        }
-        return $retval;
     }
 }

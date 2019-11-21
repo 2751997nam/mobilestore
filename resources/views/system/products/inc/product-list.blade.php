@@ -78,7 +78,7 @@
                 <td><a href="@{{ product.url }}" target="_blank">#@{{ product.sku }}</a></td>
                 <td>
                     <div class="sb-product-thumbnail" ng-if="product.image_url">
-                        <img ng-src="@{{ getImageCdn(product.image_url, 100, 100) }}" :alt="product.name" class="adminImageSearch">
+                        <img ng-src="@{{ product.image_url }}" :alt="product.name" class="adminImageSearch">
                     </div>
                 </td>
                 <td>
