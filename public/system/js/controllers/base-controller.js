@@ -806,5 +806,9 @@ function BaseController($scope, $http, $rootScope, Upload) {
         });
     };
 
+    $scope.buildUrl = function (url) {
+        return url;
+    }
+
     $scope.initOption();
 }

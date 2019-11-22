@@ -21,6 +21,8 @@ Route::group(['prefix' => '/admin', 'as' => 'admin.', 'namespace' => '\\System']
     Route::get('/{module}/{subModule}', 'IndexController@subModule')->name('system::submodule');
 });
 
-Auth::routes();
+Route::group(['prefix' => '/', 'namespace' => '\\Frontend'], function () {
+    Route::get('/', 'HomeController@index');
+});
 
-Route::get('/home', 'HomeController@index')->name('home');
+Auth::routes();

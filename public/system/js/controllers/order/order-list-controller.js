@@ -44,6 +44,7 @@ function OrderListController($scope, $http, $rootScope) {
     $scope.maxAmount = '';
     $scope.minDate = '';
     $scope.maxDate = '';
+    
     $scope.initialize = function () {
         var filters = $scope.getCacheFilter('order_filter');
         var isFiltering = $scope.getCacheFilter('order_is_filtering');
