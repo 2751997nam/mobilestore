@@ -22,6 +22,7 @@ Route::group(['prefix' => '/', 'namespace' => '\\Api'], function () {
         Route::get('/', 'ProductController@index');
         Route::post('/', 'ProductController@store');
         Route::post('/upload-image', 'ProductController@uploadImage');
+        Route::get('/search', 'ProductController@search');
     });
     
     Route::group(['prefix' => 'category', 'as' => 'category.'], function () {

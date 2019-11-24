@@ -9,15 +9,18 @@
 namespace App\Models;
 
 
-use Megaads\Apify\Models\BaseModel;
+use Illuminate\Database\Eloquent\Model;
 
-class Cart extends BaseModel
+class Cart extends Model
 {
-    use \App\Models\Multitenantable;
     protected $table = "cart";
     protected $fillable = [
         'token',
         'status',
-        'shop_uuid'
     ];
+
+    public function items()
+    {
+        return $this->hasMany(CartItem::class);
+    }
 }

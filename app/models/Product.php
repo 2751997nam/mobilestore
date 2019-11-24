@@ -9,6 +9,7 @@ use App\Models\ProductSkuValue;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Storage;
 
 class Product extends Model
 {
@@ -34,7 +35,7 @@ class Product extends Model
     protected $variantDefault = null;
 
     protected $appends = [
-        'display_price', 'display_high_price',
+        'display_price', 'display_high_price'
     ];
 
     const DAY_OF_NEW = 10;

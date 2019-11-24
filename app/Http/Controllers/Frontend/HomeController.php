@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Frontend;
 
+use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -14,6 +15,14 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('frontend.index');
+        $newestProducts = $this->getNewestProducts();
+
+        return view('frontend.index', compact('newestProducts'));
     }
+
+    public function getNewestProducts()
+    {
+        return Product::where('status', 'ACTIVE')->orderBy('created_at', 'desc')->take(config('frontend.item_limit'))->get();
+    }
+
 }

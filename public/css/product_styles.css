@@ -622,9 +622,9 @@ section
 }
 .custom_dropdown
 {
-	width: calc((100% - 50px) * 0.399);
+	width: calc((100% - 50px) * 0.299);
 	height: 50px;
-	float: left;
+	float: right;
 	padding-left: 26px;
 }
 .custom_dropdown::before

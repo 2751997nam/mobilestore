@@ -23,6 +23,10 @@ Route::group(['prefix' => '/admin', 'as' => 'admin.', 'namespace' => '\\System']
 
 Route::group(['prefix' => '/', 'namespace' => '\\Frontend'], function () {
     Route::get('/', 'HomeController@index');
+    Route::get('/search', 'ProductController@search')->name('product.search');
+    Route::get('/{slug}-p-{id}', 'ProductController@show')->name('product.detail')->where('slug', '[0-9a-zA-Z/_\-]+')->where('id', '[0-9]+');
+    Route::get('/preview-cart', 'CartController@previewCart')->name('cart.preview');
+    Route::post('/add-to-cart', 'CartController@store')->name('cart.store');
 });
 
 Auth::routes();
