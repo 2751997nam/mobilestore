@@ -14,19 +14,22 @@ use Illuminate\Database\Eloquent\Model;
 class CartItem extends Model
 {
     protected $table = "cart_item";
-    protected $appends = ['display_price', 'url'];
+    protected $appends = ['display_price', 'url', 'total'];
     protected $fillable = [
         'cart_id',
         'product_id',
         'product_name',
         'quantity',
         'price',
-        'discount',
         'image_url',
     ];
 
     public function getDisplayPriceAttribute() {
         return number_format($this->price, 0, ',', '.').' ₫';
+    }
+
+    public function getTotalAttribute() {
+        return number_format($this->price * $this->quantity, 0, ',', '.').' ₫';
     }
 
     public function getUrlAttribute() {

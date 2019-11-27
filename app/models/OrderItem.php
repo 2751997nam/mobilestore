@@ -2,31 +2,33 @@
 
 namespace App\Models;
 
-use App\Models\Multitenantable;
-use Megaads\Apify\Models\BaseModel;
+use Illuminate\Database\Eloquent\Model;
 
-class OrderItem extends BaseModel
+class OrderItem extends Model
 {
-    use Multitenantable;
 
     protected $table = 'order_item';
 
     protected $fillable = [
         'order_id',
         'product_id',
-        'product_sku_id',
         'quantity',
         'price',
-        'shop_uuid',
+        'image_url',
+        'product_name'
+    ];
+
+    protected $appends = [
+        'name'
     ];
 
     public function product()
     {
-        return $this->hasOne('App\Models\Product', 'id', 'product_id')->withTrashed();
+        return $this->hasOne(Product::class, 'id', 'product_id');
     }
 
-    public function productSku()
+    public function getNameAttribute()
     {
-        return $this->hasOne('App\Models\ProductSku', 'id', 'product_sku_id');
+        return $this->product_name;
     }
 }

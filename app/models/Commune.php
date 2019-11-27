@@ -1,10 +1,10 @@
 <?php
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
-use Megaads\Apify\Models\BaseModel;
 
-class Commune extends BaseModel
+class Commune extends Model
 {
     protected $table = 'commune';
 

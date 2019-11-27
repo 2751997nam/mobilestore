@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\System;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\View;
 
 class IndexController extends Controller
 {

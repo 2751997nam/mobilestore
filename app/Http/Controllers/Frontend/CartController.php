@@ -15,11 +15,16 @@ class CartController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $newestProducts = $this->getNewestProducts();
+        $sessionId = session()->getId();
+        $cartItems = [];
+        $cart = Cart::where('token', $sessionId)->where('status', 'pending')->first();
+        if ($cart) {
+            $cartItems = CartItem::where('cart_id', $cart->id)->get();
+        }
 
-        return view('frontend.index', compact('newestProducts'));
+        return view('frontend.cart.index', compact('cartItems'));
     }
 
     public function store(Request $request)
@@ -27,14 +32,21 @@ class CartController extends Controller
         $data = $request->all();
         $sessionId = session()->getId();
 
-        $cart = Cart::updateOrCreate(
+        $cart = Cart::where(
             [
-                'token' => $sessionId
-            ],
-            [
+                'token' => $sessionId,
                 'status' => 'pending'
             ]
-        );
+        )->first();
+
+        if (empty($cart)) {
+            $cart = Cart::create(
+                [
+                    'token' => $sessionId,
+                    'status' => 'pending'
+                ]
+            );
+        }
 
         $cartItems = CartItem::where('cart_id', $cart->id)->get();
         $check = true;
@@ -55,7 +67,6 @@ class CartController extends Controller
                     'product_id' => $product->id,
                     'price' => $product->price,
                     'quantity' => $data['quantity'],
-                    'discount' => ($product->high_price >= $product->price) ? ($product->high_price - $product->price) : 0,
                     'product_name' => $product->name,
                     'image_url' => $product->image_url
                 ]);
@@ -75,6 +86,10 @@ class CartController extends Controller
         }
 
         return view('frontend.cart.preview', compact('cartItems'));
+    }
+
+    public function checkout () {
+        return view('frontend.cart.checkout');
     }
 
 }

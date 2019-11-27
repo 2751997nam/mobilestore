@@ -50,18 +50,10 @@ class Product extends Model
         return $this->hasMany(ProductMeta::class, 'product_id', 'id');
     }
 
-    public function productSkus()
-    {
-        return $this->hasMany(ProductSku::class, 'product_id', 'id');
-    }
 
     public function categories()
     {
         return $this->belongsToMany(Category::class, 'product_n_category')->withPivot(['sorder'])->withTimestamps();
-    }
-
-    public function tags() {
-        return $this->belongsToMany('\App\Models\Tag', 'tag_refer' ,'refer_id', 'tag_id')->where('refer_type', TagRefer::REFER_PRODUCT);
     }
 
     public function brand()

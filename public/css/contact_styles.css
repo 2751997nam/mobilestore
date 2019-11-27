@@ -1260,7 +1260,7 @@ select option
 }
 .contact_form_container
 {
-
+    margin-bottom: 50px;
 }
 .contact_form_title
 {
@@ -1335,7 +1335,6 @@ select option
 .text_field
 {
 	width: 100%;
-	height: 160px;
 	padding-left: 25px;
 	padding-top: 15px;
 	border: solid 1px #e5e5e5;
@@ -1346,7 +1345,8 @@ select option
 	-moz-transition: all 200ms ease;
 	-ms-transition: all 200ms ease;
 	-o-transition: all 200ms ease;
-	transition: all 200ms ease;
+    transition: all 200ms ease;
+    resize: none;
 }
 .contact_submit_button
 {

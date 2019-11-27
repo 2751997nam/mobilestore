@@ -32,4 +32,13 @@ Route::group(['prefix' => '/', 'namespace' => '\\Api'], function () {
     Route::group(['prefix' => 'brand', 'as' => 'brand.'], function () {
         Route::get('/', 'BrandController@index');
     });
+
+    Route::get('/province', 'LocationController@getProvinces');
+    Route::get('/district', 'LocationController@getDistricts');
+    Route::get('/commune', 'LocationController@getCommunes');
+    Route::get('/order', 'OrderController@index');
+    Route::post('/order', 'OrderController@store')->name('api.order.store');
+    Route::get('/order/{id}', 'OrderController@show');
+    ROute::put('/order/{id}', 'OrderController@update');
+    Route::patch('/order/{id}', 'OrderController@updateStatus');
 });

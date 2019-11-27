@@ -2,9 +2,9 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Builder;
-use Megaads\Apify\Models\BaseModel;
+use Illuminate\Database\Eloquent\Model;
 
-class Province extends BaseModel
+class Province extends Model
 {
     protected $table = 'province';
 

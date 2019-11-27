@@ -108,15 +108,22 @@ function ProductController($scope, $http, $rootScope, $interval, $window, Upload
         }
     };
 
+    $scope.fail = function (response) {
+        let textErr = response.data.message;
+        toastr.error(textErr);
+    };
+
     $scope.save = function () {
         let data = buildProductData();
 
         $http.post('/api/product', JSON.stringify(data))
             .then(function (response) {
                 if (response.data.status == 'success') {
-
+                    $scope.showSuccessModal('thêm sản phẩm thành công', function () {
+                        // window.location.href = '/admin/products';
+                    });
                 } else {
-
+                    $scope.fail(response);
                 }
             });
     }

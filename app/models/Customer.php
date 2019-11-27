@@ -1,14 +1,36 @@
 <?php
 namespace App\Models;
 
-use Megaads\Apify\Models\BaseModel;
 use App\Models\Order;
+use Illuminate\Database\Eloquent\Model;
 
-class Customer extends BaseModel
+class Customer extends Model
 {
-    use \App\Models\Multitenantable;
 
     protected $table = 'customer';
+    protected $fillable = [
+        'username',
+        'full_name',
+        'phone',
+        'email',
+        'gender',
+        'status',
+        'address',
+        'commune_id',
+        'district_id',
+        'province_id',
+    ];
+
+    protected $hidden = [
+        'username',
+        'shop_uuid',
+        'updated_at',
+        'created_at',
+        'gender',
+        'status',
+        'location_id'
+    ];
+    
     protected $appends = [
         'total_order',
         'total_amount',
@@ -32,30 +54,7 @@ class Customer extends BaseModel
         return "<a href=\"tel:$this->phone\">$display</a>";
     }
 
-    protected $fillable = [
-        'username',
-        'full_name',
-        'phone',
-        'email',
-        'gender',
-        'status',
-        'location_id',
-        'address',
-        'commune_id',
-        'district_id',
-        'province_id',
-        'note',
-    ];
 
-    protected $hidden = [
-        'username',
-        'shop_uuid',
-        'updated_at',
-        'created_at',
-        'gender',
-        'status',
-        'location_id'
-    ];
 
 
 

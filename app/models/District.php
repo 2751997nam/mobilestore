@@ -1,10 +1,10 @@
 <?php
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
-use Megaads\Apify\Models\BaseModel;
 
-class District extends BaseModel
+class District extends Model
 {
     protected $table = 'district';
 

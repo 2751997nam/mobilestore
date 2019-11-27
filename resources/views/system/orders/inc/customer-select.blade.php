@@ -54,7 +54,4 @@
             </div>
         </div>
     </div>
-
-    @view('system.order.metas')
-
 </div>

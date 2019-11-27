@@ -75,7 +75,7 @@
                                     @endif
                                 </div>
                                 <div class="button_container">
-                                    <button type="button" id="js-add-to-cart" data-product-id="{{ $product->id }}" class="button cart_button">Thêm vào giỏ hàng</button>
+                                    <a href="#" id="js-add-to-cart" data-product-id="{{ $product->id }}" class="button cart_button">Thêm vào giỏ hàng</a>
                                     <div class="product_fav"><i class="fas fa-heart"></i></div>
                                 </div>
                             </div>

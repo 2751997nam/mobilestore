@@ -1,7 +1,7 @@
 $(document).ready(function () {
     $('#js-add-to-cart').click(function () {
         let productId = $(this).attr('data-product-id');
-        let quantity  = $('#quantity_input').val();
+        let quantity  = parseInt($('#quantity_input').val());
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
@@ -16,6 +16,8 @@ $(document).ready(function () {
             },
             success: function (response) {
                 $('#cart-preview').html(response);
+                $('#cart-preview').removeClass('d-none');
+                $('.cart_count span').text(parseInt($('.cart_count span').text()) + quantity);
             }
         })
     });

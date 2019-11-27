@@ -20,8 +20,8 @@
         @endforeach
 
         <div class="cart-action">
-            <a class="btn btn-success text-light">Xem chi tiết</a>
-            <a class="btn btn-primary text-light" style="margin-left: 50px;">Thanh toán</a>
+            <a class="btn btn-success text-light" href="{{ route('cart.index') }}">Xem chi tiết</a>
+            <a class="btn btn-primary text-light" style="margin-left: 50px;" href="{{ route('checkout') }}">Thanh toán</a>
         </div>
     @else
         <div class="cart-empty">

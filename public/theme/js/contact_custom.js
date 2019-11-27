@@ -124,14 +124,6 @@ $(document).ready(function()
 				list.addClass('active');
 			}
 		});
-
-
-		$('select').on('change', function (e)
-		{
-			placeholder.text(this.value);
-
-			$(this).animate({width: placeholder.width() + 'px' });
-		});
 	}
 
 	/* 

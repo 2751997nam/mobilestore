@@ -6,7 +6,12 @@ function OrderListController($scope, $http, $rootScope) {
     $scope.orders = [];
     $scope.isFiltering = false;
     $scope.search = '';
-    $scope.statusFlow = [];
+    $scope.statusFlow = {
+        "PROCESSING":["PENDING","CANCELED"],
+        "PENDING":["DELIVERING","CANCELED"],
+        "DELIVERING":["FINISHED","RETURNED"],
+        "FINISHED":["RETURNED"]
+    };
     $scope.selectedChangeStatus = '';
     $scope.orderStatus = {
         'PROCESSING': 'Đang xử lý',
@@ -35,7 +40,7 @@ function OrderListController($scope, $http, $rootScope) {
     $scope.displayedFilters = {}
     $scope.filters = {};
     $scope.selectedFilter = ''
-    $scope.baseUrl = '/order?embeds=customer,district,location&sorts=-created_at&page_size=20';
+    $scope.baseUrl = '/api/order';
     $scope.locations = [];
     $scope.selectedProvinceId = '';
     $scope.selectedProvince = ''
@@ -67,16 +72,6 @@ function OrderListController($scope, $http, $rootScope) {
             $scope.meta = JSON.parse(meta);
         }
         $scope.filterOrders(false);
-
-        var url = $scope.buildUrl('/order/status-flow');
-        $http.get(url)
-            .then(function (response) {
-                $scope.statusFlow = response.data;
-            });
-        $http.get($scope.buildUrl('/location?embeds=districts&filters=parent_id=0'))
-            .then(function (response) {
-                $scope.locations = response.data.result;
-            });
     }
 
     $scope.buildOrderUrl = function () {
@@ -117,7 +112,7 @@ function OrderListController($scope, $http, $rootScope) {
         if ($scope.search.length > 0) {
             $scope.isFiltering = 'search';
             $scope.filters.code = {
-                operator: "~",
+                operator: "=",
                 value: $scope.search
             };
             $scope.displayedFilters.keyword = $scope.search;
@@ -138,7 +133,7 @@ function OrderListController($scope, $http, $rootScope) {
         $scope.displayedFilters = {};
         $scope.isFiltering = 'search';
         $scope.filters.code = {
-            operator: "~",
+            operator: "=",
             value: $scope.search
         };
         $scope.filterOrders();
@@ -186,7 +181,7 @@ function OrderListController($scope, $http, $rootScope) {
             title: 'Chuyển trạng thái',
             text: 'chuyển trạng thái đơn hàng sang "' + $scope.orderStatus[status] + '"',
         }, function () {
-            $http.patch($scope.buildUrl('/order') + '/' + order.id, {
+            $http.patch($scope.buildUrl('/api/order') + '/' + order.id, {
                 'status': status
             })
                 .then(function (result) {
@@ -199,67 +194,6 @@ function OrderListController($scope, $http, $rootScope) {
                     $scope.showErrorModal(title);
                 });
         });
-    }
-
-    $scope.setSelectedProvince = function ()
-    {
-        for (var i = 0; i < $scope.locations.length; i++)
-        {
-            if ($scope.selectedProvinceId == $scope.locations[i].id)
-            {
-                $scope.selectedProvince = $scope.locations[i];
-            }
-        }
-    }
-
-    // $scope.addLocationFilter = function ()
-    // {
-    //     if ($scope.selectedProvinceId != '')
-    //     {
-    //         $scope.filters.delivery_location_id = $scope.selectedProvinceId;
-    //         var province = $scope.findProvince($scope.selectedProvinceId);
-    //         if (province != null) {
-    //             $scope.displayedFilters.delivery_location_id = province.name;
-    //         }
-    //     }
-    //     if ($scope.selectedDistrictId != '')
-    //     {
-    //         $scope.filters.delivery_district_id = $scope.selectedDistrictId;
-    //         var province = $scope.findProvince($scope.selectedProvinceId);
-    //         var district = $scope.findDistrict(province, $scope.selectedDistrictId);
-    //         if (district != null) {
-    //             $scope.displayedFilters.delivery_district_id = district.name;
-    //         }
-    //     }
-    // }
-
-    $scope.findProvince = function (id)
-    {
-        var location = null;
-        for (var i = 0; i < $scope.locations.length; i++)
-        {
-            if ($scope.locations[i].id == id) {
-                location = $scope.locations[i];
-                break;
-            }
-        }
-
-        return location;
-    }
-
-    $scope.findDistrict = function (province, id)
-    {
-        var districts = province.districts;
-        var district = null;
-        for (var i = 0; i < districts.length; i++)
-        {
-            if (districts[i].id == id) {
-                district = districts[i];
-                break;
-            }
-        }
-
-        return district;
     }
 
     $scope.addCreateDateFilter = function () {
@@ -310,15 +244,9 @@ function OrderListController($scope, $http, $rootScope) {
         $scope.filterOrders();
     };
 
-    // $scope.addAmountFilter = function () {
-    //     $scope.addFilterInRange($scope.minAmount, $scope.maxAmount, 'amount', 'number');
-    //
-    //     isFiltering = true;
-    // };
-
     $scope.addStatusFilter = function (type)
     {
-        var filterStatus = "{";
+        var filterStatus = "";
         switch (type) {
             case 'processing':
                 filterStatus += "PROCESSING;PENDING;DELIVERING";
@@ -333,8 +261,7 @@ function OrderListController($scope, $http, $rootScope) {
                 $scope.displayedFilters['order.status'] = $scope.orderStatus['FINISHED'];
                 break;
         }
-        filterStatus += "}";
-        $scope.filters['order.status'] = {
+        $scope.filters['status'] = {
             operator: "=",
             value: filterStatus
         }

@@ -1252,11 +1252,11 @@ select option
 {
 	width: calc(100% - 133px);
 	float: left;
-	padding-top: 18px;
 }
 .cart_item_name
 {
-	margin-left: 7.53%;
+    margin-left: 7.53%;
+    width: 40%;
 }
 .cart_item_title
 {

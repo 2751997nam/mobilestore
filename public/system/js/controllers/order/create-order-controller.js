@@ -42,7 +42,7 @@ function CreateOrderController($scope, $http, $rootScope)
     {
         $scope.resetNewCustomer();
 
-        var url = $scope.buildUrl('/province?page_size=1000');
+        var url = $scope.buildUrl('/api/province');
         $http.get(url).then(function (response) {
             $scope.provinces = response.data.result;
             $scope.provinces.unshift({id: 0, name: 'Chọn tỉnh/thành phố'});
@@ -66,16 +66,7 @@ function CreateOrderController($scope, $http, $rootScope)
 
     $scope.setDistricts = function () {
         if ($scope.newCustomer.province_id > 0) {
-            // for (var i = 0; i < $scope.provinces.length; i++)
-            // {
-            //     if ($scope.provinces[i].id == $scope.newCustomer.province_id && $scope.provinces[i].districts)
-            //     {
-            //         $scope.districts = JSON.parse(JSON.stringify($scope.provinces[i].districts));
-            //         $scope.districts.unshift({id: 0, name: 'Chọn quận/huyện'});
-            //         break;
-            //     }
-            // }
-            $http.get($scope.buildUrl('/district?embeds=communes&page_size=10000&filters=province_id=' + $scope.newCustomer.province_id))
+            $http.get($scope.buildUrl('/api/district?province_id=' + $scope.newCustomer.province_id))
                 .then(function (response) {
                     $scope.districts = response.data.result;
                     $scope.districts.unshift({id: 0, name: 'Chọn quận/huyện'});
@@ -86,17 +77,14 @@ function CreateOrderController($scope, $http, $rootScope)
     }
 
     $scope.setCommunes = function () {
-        $scope.communes = [];
         if ($scope.newCustomer.district_id > 0) {
-            for (var i = 0; i < $scope.districts.length; i++)
-            {
-                if ($scope.districts[i].id == $scope.newCustomer.district_id && $scope.districts[i].communes)
-                {
-                    $scope.communes = JSON.parse(JSON.stringify($scope.districts[i].communes));
+            $http.get($scope.buildUrl('/api/commune?district_id=' + $scope.newCustomer.district_id))
+                .then(function (response) {
+                    $scope.communes = response.data.result;
                     $scope.communes.unshift({id: 0, name: 'Chọn xã/phường'});
-                    break;
-                }
-            }
+                }).catch (function (error) {
+                    $scope.communes = [];
+                })
         }
     }
 
@@ -110,7 +98,7 @@ function CreateOrderController($scope, $http, $rootScope)
                 input.focus();
             }
         }
-        var url = $scope.buildUrl('/product/find?name=' + $scope.searchProductQuery);
+        var url = $scope.buildUrl('/api/product/search?q=' + $scope.searchProductQuery);
 
         $http.get(url).then(function (response) {
             $scope.products = response.data.result;
@@ -262,21 +250,20 @@ function CreateOrderController($scope, $http, $rootScope)
         {
             if ($scope.provinces[i].id == $scope.selectedCustomer.province_id) {
                 province = $scope.provinces[i];
-                for (var j = 0; j < $scope.districts.length; j++)
-                {
-                    if ($scope.districts[j].id == $scope.selectedCustomer.district_id) {
-                        district = $scope.districts[j];
-                        var communes = district.communes;
-                        if (communes) {
-                            for (var k = 0; k < communes.length; k++) {
-                                if (communes[k].id == $scope.selectedCustomer.commune_id) {
-                                    commune = communes[k];
-                                }
-                            }
-                        }
-                        break;
-                    }
-                }
+                break;
+            }
+        }
+        for (var j = 0; j < $scope.districts.length; j++)
+        {
+            if ($scope.districts[j].id == $scope.selectedCustomer.district_id) {
+                district = $scope.districts[j];
+                break;
+            }
+        }
+        for (var j = 0; j < $scope.communes.length; j++)
+        {
+            if ($scope.communes[j].id == $scope.selectedCustomer.commune_id) {
+                commune = $scope.communes[j];
                 break;
             }
         }
@@ -368,6 +355,7 @@ function CreateOrderController($scope, $http, $rootScope)
                 product_name: products[i].name,
                 quantity: products[i].quantity,
                 price: products[i].price,
+                image_url: products[i].image_url,
             };
             if (typeof products[i].product_sku_id != 'undefined') {
                 item.product_id = products[i].product_id;

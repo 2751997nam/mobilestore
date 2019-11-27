@@ -34,19 +34,19 @@ function BaseController($scope, $http, $rootScope, Upload) {
     $scope.buildFilterUrl = function (url) {
         var hasParam = url.split('?')[1] !== undefined;
         if (Object.keys($scope.filters).length > 0) {
-            if (!hasParam) {
-                url += '?filters=';
-            } else {
-                url += '&filters=';
-            }
             for (key in $scope.filters) {
+                if (!hasParam) {
+                    url += '?';
+                } else {
+                    url += '&';
+                }
                 if (typeof ($scope.filters[key]) === 'object') {
                     if ($scope.filters[key].value != '') {
-                        url += key + $scope.filters[key].operator + $scope.filters[key].value + ',';
+                        url += key + $scope.filters[key].operator + $scope.filters[key].value;
                     }
                 } else {
                     if ($scope.filters[key] != '') {
-                        url += key + '=' + $scope.filters[key] + ',';
+                        url += key + '=' + $scope.filters[key];
                     }
                 }
             }

@@ -5,7 +5,12 @@ function EditOrderController($scope, $http, $rootScope) {
     $scope.editting = false;
     $scope.loaded = false;
     $scope.order = {};
-    $scope.statusFlow = {};
+    $scope.statusFlow = {
+        "PROCESSING":["PENDING","CANCELED"],
+        "PENDING":["DELIVERING","CANCELED"],
+        "DELIVERING":["FINISHED","RETURNED"],
+        "FINISHED":["RETURNED"]
+    };
     $scope.orderStatus = {
         'PROCESSING': 'Đang xử lý',
         'CANCELED': 'Đã huỷ',
@@ -27,7 +32,7 @@ function EditOrderController($scope, $http, $rootScope) {
     $scope.logs = [];
     $scope.orderFields = [];
     $scope.initialize = function () {
-        $http.get($scope.buildUrl('/order?filters=id=' + orderId + '&embeds=customer&metric=first'))
+        $http.get($scope.buildUrl('/api/order/' + orderId))
             .then(function (response) {
                 $scope.order = response.data.result;
                 $scope.selectedProducts = $scope.order.items;
@@ -53,39 +58,9 @@ function EditOrderController($scope, $http, $rootScope) {
                 $scope.calculateAmount();
                 $scope.newCustomer = JSON.parse(JSON.stringify($scope.selectedCustomer));
                 $scope.setDistricts();
-
-                var url = $scope.buildUrl('/order/status-flow');
-                $http.get(url)
-                    .then(function (response) {
-                        $scope.statusFlow = response.data;
-                        $scope.loaded = true;
-                    });
+                $scope.setCommunes();
+                $scope.loaded = true;
         });
-
-
-        $http.get('/translate/order')
-            .then(function (response) {
-                $scope.orderFields = response.data;
-            });
-        $scope.getLogs();
-    }
-
-    $scope.getLogs = function () {
-        $http.get($scope.buildUrl('/log/order/' + orderId))
-            .then(function (response) {
-                $scope.logs = response.data;
-                for (var i = 0; i < $scope.logs.length; i++) {
-                    if ($scope.logs[i].data) {
-                        $scope.logs[i].data = $scope.logs[i].data;
-                        $scope.logs[i].isDisplayItem = false;
-                        $scope.logs[i].isDisplayCustomer = false;
-                        $scope.logs[i].show = false;
-                    }
-                }
-                if ($scope.logs.length > 0) {
-                    $scope.logs[0].show = true;
-                }
-            });
     }
 
     $scope.changeStatus = function () {
@@ -103,7 +78,7 @@ function EditOrderController($scope, $http, $rootScope) {
 
         $scope.disabledSave = true;
         $http({
-            url: $scope.buildUrl('/order/' + data.id),
+            url: $scope.buildUrl('/api/order/' + data.id),
             method: 'PUT',
             data: JSON.stringify(data),
             headers: {
@@ -111,9 +86,13 @@ function EditOrderController($scope, $http, $rootScope) {
             },
         }).then(function (response) {
             $scope.disabledSave = false;
-            $scope.showSuccessModal('sửa đơn hàng', function () {
-                window.location.href = '/admin/orders';
-            });
+            if (response.data.status == 'successful') {
+                $scope.showSuccessModal('sửa đơn hàng', function () {
+                    // window.location.href = '/admin/orders';
+                });
+            } else {
+                $scope.fail(response);
+            }
         }).catch(function (error) {
             $scope.disabledSave = false;
             if (error.status == 422) {
@@ -156,24 +135,8 @@ function EditOrderController($scope, $http, $rootScope) {
 
     $scope.addSelectedCustomer = function () {
         $scope.newCustomer.delivery_address = $scope.newCustomer.address;
-        $http({
-            url: $scope.buildUrl('/order/validate-address'),
-            method: 'POST',
-            data: JSON.stringify($scope.newCustomer),
-            headers: {
-                'Content-Type': 'application/json'
-            },
-        }).then(function () {
-            $scope.selectedCustomer = JSON.parse(JSON.stringify($scope.newCustomer));
-            $scope.validationErrors = {};
-            $('#create-customer-modal').modal('toggle');
-        }).catch(function (error) {
-            if (error.data && error.data.message) {
-                $scope.validationErrors = error.data.message;
-            } else {
-                console.log(error);
-            }
-        });
+        $scope.selectedCustomer = JSON.parse(JSON.stringify($scope.newCustomer));
+        $('#create-customer-modal').modal('toggle');
     }
 
     $scope.changeStatus = function (status) {
@@ -182,15 +145,18 @@ function EditOrderController($scope, $http, $rootScope) {
             title: 'Chuyển trạng thái',
             text: 'chuyển trạng thái đơn hàng sang "' + $scope.orderStatus[status] + '"',
         }, function () {
-            $http.patch($scope.buildUrl('/order') + '/' + $scope.order.id, {
+            $http.patch($scope.buildUrl('/api/order') + '/' + $scope.order.id, {
                 'status': status
             })
                 .then(function (result) {
-                    $scope.$applyAsync(function () {
-                        $scope.order.status = status;
-                    });
-                    $scope.showSuccessModal(title);
-                    $scope.getLogs();
+                    if (result.data.status == 'successful') {
+                        $scope.$applyAsync(function () {
+                            $scope.order.status = status;
+                        });
+                        $scope.showSuccessModal(title);
+                    } else {
+                        $scope.showErrorModal(title);
+                    }
                 })
                 .catch(function (error) {
                     $scope.showErrorModal(title);

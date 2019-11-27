@@ -13,7 +13,6 @@
                     {{-- <span class="th-item-quantity">Số lượng</span> --}}
                 </th>
                 <th>Thành tiền</th>
-                <th>Tổng số tiền</th>
                 <th style="width: 120px">Trạng thái</th>
                 <th style="width: 100px"></th>
             </tr>
@@ -33,12 +32,11 @@
                 <td>
                     <ul>
                         <li class="order-list-items" ng-repeat="product in order.items">
-                            <a href="@{{ product.url}}" target="_blank" ng-bind="product.name"></a>
-                            <span>x @{{product.quantity}}</span>
+                            <a href="@{{ product.url}}" target="_blank" ng-bind="product.product_name"></a>
+                            <span>x @{{ product.quantity }}</span>
                         </li>
                     </ul>
                 </td>
-                <td class="text-right width-fit-content"><strong>@{{ formatCurrency(order.subtotal) }} <sup>đ</sup></strong></td>
                 <td class="text-right width-fit-content"><strong>@{{ formatCurrency(order.amount) }} <sup>đ</sup></strong></td>
                 <td>
                     <span class="label label-@{{ getStatusClass(order.status) }}">
@@ -59,7 +57,7 @@
                 </td>
             </tr>
             <tr ng-if="orders.length == 0">
-                <td colspan="6" class="text-center">Không có đơn hàng nào</td>
+                <td colspan="3" class="text-center">Không có đơn hàng nào</td>
             </tr>
         </tbody>
     </table>
