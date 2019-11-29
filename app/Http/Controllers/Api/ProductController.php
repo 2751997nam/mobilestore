@@ -120,6 +120,61 @@ class ProductController extends Controller
         return $retval;
     }
 
+    public function update(Request $request, $id)
+    {
+        $retval = $this->responseSuccess('Sửa sản phẩm thành công!');
+        $validator = Validator::make($request->all(), self::VALIDATION_RULES, [], self::NICE_NAMES);
+
+        if ($validator->fails()) {
+            $retval = $this->responseFail($validator->errors()->first());
+        } else {
+            $data = $request->all();
+            if (!empty($data['images'])) {
+                $data['image_url'] = $data['images'][0];
+            }
+
+            $product = Product::find($id);
+
+            if (empty($product)) {
+                $this->responseFail('Không tìm thấy sản phẩm');
+            }
+            $product->fill($data);
+            $product->save();
+
+            if (!empty($product)) {
+                if (!empty($data['categories'])) {
+                    $product->categories()->sync($data['categories']);
+                }
+
+                if (!empty($data['images'])) {
+                    ProductGallery::where('product_id', $product->id)->delete();
+                    array_shift($data['images']); 
+                    $saveImages = [];
+                    foreach ($data['images'] as $value) {
+                        $saveImages[] = [
+                            'product_id' => $product->id,
+                            'image_url' => $value
+                        ];
+                    }
+
+                    ProductGallery::insert($saveImages);
+                }
+            }
+        }
+
+        return $retval;
+    }
+
+    public function show($id)
+    {
+        $product = Product::with(['categories', 'brand', 'galleries'])->where('id', $id)->first();
+        if (!empty($product)) {
+            return $this->responseData($product);
+        } else {
+            return $this->responseFail('Không tìm thấy sản phẩm');
+        }
+    }
+
     public function toSqlWithBinding($query)
     {
         $sql = $query->toSql();

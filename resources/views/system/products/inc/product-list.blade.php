@@ -97,9 +97,6 @@
                         @{{ product.brand.name }}
                     </td>
                     <td class="text-right">
-                        <a href="@{{ '/admin/products/new?clone=' + product.id }}" target="_blank" class="btn btn-flat btn-default" role="button" alt="Sao chép sản phẩm" title="Sao chép sản phẩm" ng-click="$event.stopPropagation();">
-                            <i class="fa fa-copy" aria-hidden="true"></i>
-                        </a>
                         <a href="@{{ product.url }}" target="_blank" class="btn btn-flat btn-primary" role="button" alt="Xem sản phẩm" title="Xem sản phẩm" ng-click="$event.stopPropagation();">
                             <i class="fa fa-eye" aria-hidden="true"></i>
                         </a>

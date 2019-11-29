@@ -20,6 +20,8 @@ use Illuminate\Http\Request;
 Route::group(['prefix' => '/', 'namespace' => '\\Api'], function () {
     Route::group(['prefix' => 'product', 'as' => 'product.'], function () {
         Route::get('/', 'ProductController@index');
+        Route::get('/{id}', 'ProductController@show');
+        Route::put('/{id}', 'ProductController@update');
         Route::post('/', 'ProductController@store');
         Route::post('/upload-image', 'ProductController@uploadImage');
         Route::get('/search', 'ProductController@search');
@@ -27,6 +29,10 @@ Route::group(['prefix' => '/', 'namespace' => '\\Api'], function () {
     
     Route::group(['prefix' => 'category', 'as' => 'category.'], function () {
         Route::get('/', 'CategoryController@index');
+        Route::post('/', 'CategoryController@store');
+        Route::put('/{id}', 'CategoryController@update');
+        Route::delete('/{id}', 'CategoryController@delete');
+        Route::post('/upload-image', 'CategoryController@uploadImage');
     });
 
     Route::group(['prefix' => 'brand', 'as' => 'brand.'], function () {

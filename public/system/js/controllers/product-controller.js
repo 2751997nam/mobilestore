@@ -2,7 +2,7 @@ system.controller("ProductController", ProductController);
 
 function ProductController($scope, $http, $rootScope, $interval, $window, Upload){
     this.__proto__ = new BaseController($scope, $http, $rootScope, Upload);
-    $scope.mode = productId ? 'create' : 'update';
+    $scope.mode = productId ? 'update' : 'create';
     $scope.categories = [];
     $scope.brands = [];
     $scope.isPage = true;
@@ -28,6 +28,30 @@ function ProductController($scope, $http, $rootScope, $interval, $window, Upload
         $scope.isPage = true;
         getCategories();
         getBrands();
+        if (productId) {
+            getProduct();
+        }
+    }
+
+    function getProduct() 
+    {
+        $http.get('/api/product/' + productId).then(function (response) {
+            if (response.data.status == 'successful') {
+                $scope.product = response.data.result;
+                $scope.gallery.push({
+                    image_url: $scope.product.image_url
+                });
+                if ($scope.product.galleries.length > 0) {
+                    $scope.product.galleries.forEach(function (element) {
+                        $scope.gallery.push({
+                            image_url: element.image_url
+                        });
+                    });
+                }
+            } else {
+                $scope.fail(response);
+            }
+        }); 
     }
 
     function getCategories() {
@@ -115,17 +139,29 @@ function ProductController($scope, $http, $rootScope, $interval, $window, Upload
 
     $scope.save = function () {
         let data = buildProductData();
-
-        $http.post('/api/product', JSON.stringify(data))
+        if (productId) {
+            $http.put('/api/product/' + productId, JSON.stringify(data))
             .then(function (response) {
-                if (response.data.status == 'success') {
-                    $scope.showSuccessModal('thêm sản phẩm thành công', function () {
+                if (response.data.status == 'successful') {
+                    $scope.showSuccessModal('Sửa sản phẩm thành công', function () {
                         // window.location.href = '/admin/products';
                     });
                 } else {
                     $scope.fail(response);
                 }
             });
+        } else {
+            $http.post('/api/product', JSON.stringify(data))
+            .then(function (response) {
+                if (response.data.status == 'successful') {
+                    $scope.showSuccessModal('Thêm sản phẩm thành công', function () {
+                        // window.location.href = '/admin/products';
+                    });
+                } else {
+                    $scope.fail(response);
+                }
+            });
+        }
     }
 
 

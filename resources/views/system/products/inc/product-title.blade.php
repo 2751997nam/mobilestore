@@ -24,11 +24,6 @@
                 </div>
             </div>
             <div class="form-group">
-                <label>Mô tả ngắn</label>
-                {{-- <span class="pull-right">3/1000 ký tự</span> --}}
-                <textarea type="text" class="form-control" ng-model="product.description" placeholder="Nhập mô tả ngắn" ng-blur="prerenderSeo()"></textarea>
-            </div>
-            <div class="form-group">
                 <label>Nội dung</label>
                 <textarea id="js-editor-content" ck-editor ng-model="product.content"></textarea>
             </div>

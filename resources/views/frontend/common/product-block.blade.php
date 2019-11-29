@@ -25,17 +25,17 @@
                                             <div class="border_active"></div>
                                             <div class="product_item is_new d-flex flex-column align-items-center justify-content-center text-center">
                                                 <div class="product_image d-flex flex-column align-items-center justify-content-center">
-                                                    <img src="{{ $product->image_url }}" alt="">
+                                                    <a href="{{ $product->url }}"><img src="{{ $product->image_url }}" alt=""></a>
                                                 </div>
                                                 <div class="product_content">
                                                     <div class="product_price">{{ $product->price }}</div>
-                                                    <div class="product_name"><div><a href="product.html">{{ $product->name }}</a></div></div>
+                                                    <div class="product_name"><div><a href="{{ $product->url }}">{{ $product->name }}</a></div></div>
                                                     <div class="product_extras">
-                                                        <button class="product_cart_button">Add to Cart</button>
+                                                        <button class="product_cart_button" style="background: #ffffff"></button>
                                                     </div>
                                                 </div>
                                                 <div class="product_fav"><i class="fas fa-heart"></i></div>
-                                                <ul class="product_marks">
+                                                <ul class="product_marks d-none">
                                                     <li class="product_mark product_discount">-25%</li>
                                                     <li class="product_mark product_new">new</li>
                                                 </ul>

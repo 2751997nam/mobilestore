@@ -21,61 +21,6 @@ class Category extends Model {
         'url'
     ];
 
-    public function meta() {
-        return $this->hasMany('App\Models\CategoryMeta', 'category_id', 'id');
-    }
-
-    public function getLftName()
-    {
-        return '_lft';
-    }
-
-    public function getRgtName()
-    {
-        return '_rgt';
-    }
-
-    public function getParentIdName()
-    {
-        return 'parent_id';
-    }
-
-    // Specify parent id attribute mutator
-    public function setParentAttribute($value)
-    {
-        $this->setParentIdAttribute($value);
-    }
-
-    public function checkDescendants($id){
-        $descendants = Category::descendantsOf($this->id);
-        foreach ($descendants as $cate){
-            if($cate->id == $id) return true;
-        }
-        return false;
-    }
-
-    public function hasChild(){
-        if(!$this->id) return false;
-        if(!Category::descendantsOf($this->id)->count())
-            return false;
-        return true;
-    }
-
-    public function fullDelete()
-    {
-        if(!$this->id) return false;
-
-        $status = false;
-        if(!Category::descendantsOf($this->id)->count()){
-            ProductNCategory::where('category_id', '=', $this->id)->delete();
-            CategoryMeta::where('category_id', '=', $this->id)->delete();
-            $this->delete();
-            $status = true;
-        }
-
-        return $status;
-    }
-
     public function products()
     {
         return $this->belongsToMany(Product::class, 'product_n_category')->withPivot(['sorder'])->withTimestamps();

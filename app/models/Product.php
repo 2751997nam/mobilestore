@@ -35,7 +35,7 @@ class Product extends Model
     protected $variantDefault = null;
 
     protected $appends = [
-        'display_price', 'display_high_price'
+        'display_price', 'display_high_price', 'editUrl', 'url'
     ];
 
     const DAY_OF_NEW = 10;
@@ -62,7 +62,11 @@ class Product extends Model
     }
 
     public function getUrlAttribute () {
-        return "/" . (!empty($this->slug) ? $this->slug : "san-pham") . "-p" . $this->id . ".html";
+        return "/" . (!empty($this->slug) ? $this->slug : "san-pham") . "-p-" . $this->id;
+    }
+
+    public function getEditUrlAttribute() {
+        return  '/' . 'admin/products/' . $this->id;
     }
 
     public function getDisplayPriceAttribute () {

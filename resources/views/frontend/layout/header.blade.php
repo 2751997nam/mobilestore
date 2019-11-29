@@ -49,7 +49,7 @@
                 <!-- Logo -->
                 <div class="col-lg-2 col-sm-3 col-3 order-1">
                     <div class="logo_container">
-                        <div class="logo"><a href="#">NMobile</a></div>
+                        <div class="logo"><a href="{{ route('index') }}">NMobile</a></div>
                     </div>
                 </div>
 
@@ -60,7 +60,7 @@
                             <div class="header_search_form_container">
                                 <form action="{{ route('product.search') }}" class="header_search_form clearfix">
                                     <input type="search" name="q" class="header_search_input" placeholder="Tìm kiếm sản phẩm...">
-                                    <div class="custom_dropdown">
+                                    <div class="custom_dropdown d-none">
                                         <div class="custom_dropdown_list">
                                             <span class="custom_dropdown_placeholder clc">All Categories</span>
                                             <i class="fas fa-chevron-down"></i>

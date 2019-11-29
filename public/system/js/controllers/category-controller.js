@@ -10,9 +10,6 @@ function CategoryController($scope, $http, $rootScope, $timeout, Upload, $q) {
     $scope.categories = [];
     $scope.currentCategory = {};
     $scope.mode = CREATE_MODE;
-    $scope.TYPE = ['PRODUCT', 'POST'];
-    $scope.categoryType = categoryType;
-
 
     function initialize() {
         $scope.getCategory();
@@ -36,11 +33,10 @@ function CategoryController($scope, $http, $rootScope, $timeout, Upload, $q) {
         $scope.currentCategory = angular.copy(category);
         $scope.currentCategory.is_display_home_page = $scope.currentCategory.is_display_home_page ? true : false;
         $scope.baseController.openDialogModal('#modalAddCategory');
-
     };
 
     $scope.getCategory = function () {
-        $http.get(apiUrl + '/category/tree?type=' + $scope.categoryType)
+        $http.get(apiUrl + '/api/category')
             .then(function (response) {
                 $scope.categories = response.data.result;
             });
@@ -60,11 +56,7 @@ function CategoryController($scope, $http, $rootScope, $timeout, Upload, $q) {
             btnSelector = ($scope.mode === UPDATE_MODE) ? "#btnSave" : "#btnUpdate";
 
         if (response.data.status === "fail") {
-            let textErr = '';
-            Object.keys(response.data.result).forEach((item) => {
-                textErr += response.data.result[item].join(', ');
-            });
-            toastr.error(response.data.message + textErr);
+            toastr.error(response.data.message);
             $scope.baseController.stopLoaddingButton(btnSelector);
         }
     };
@@ -73,7 +65,7 @@ function CategoryController($scope, $http, $rootScope, $timeout, Upload, $q) {
         //$scope.baseController.openDialogModal('#modalDeleteCategory');
 
         $scope.callConfirmDeleteModal({
-            url: apiUrl + "/category/" + category.id,
+            url: apiUrl + "/api/category/" + category.id,
             title: "Xóa danh mục",
             text: 'xoá ' + category.name,
             success: function (result) {
@@ -82,41 +74,7 @@ function CategoryController($scope, $http, $rootScope, $timeout, Upload, $q) {
             },
         });
 
-        // $scope.deleteId = category.id;
     };
-
-    /*$scope.doDelete = function(){
-        $scope.baseController.loaddingButton('#doDelete');
-
-        const success = function(response) {
-            toastr.success('#' + response.data.result.id + '. ' + response.data.message);
-
-            $scope.getCategory();
-            $scope.reset();
-
-            $scope.baseController.stopLoaddingButton('#doDelete');
-            $('#modalDeleteCategory').modal('toggle');
-        }
-
-        const fail = function (response){
-            if (response.data.status === "fail") {
-                toastr.error(response.data.message);
-                $scope.baseController.stopLoaddingButton('#doDelete');
-                $('#modalDeleteCategory').modal('toggle');
-            }
-        };
-
-        $http({
-            method: "DELETE" ,
-            url: apiUrl + "/category/" + $scope.deleteId
-        }).then(function (response) {
-            if (response.data.status !== "fail") {
-                success(response);
-            }else{
-                fail(response);
-            }
-        }, fail)
-    }*/
 
     $scope.save = function () {
         let btnSelector = ($scope.mode === UPDATE_MODE) ? "#btnSave" : "#btnUpdate";
@@ -144,7 +102,7 @@ function CategoryController($scope, $http, $rootScope, $timeout, Upload, $q) {
 
         $http({
             method: ($scope.mode === UPDATE_MODE) ? "PUT" : "POST",
-            url: apiUrl + "/category" + (($scope.mode === UPDATE_MODE) ? "/" + $scope.currentCategory.id : ''),
+            url: apiUrl + "/api/category" + (($scope.mode === UPDATE_MODE) ? "/" + $scope.currentCategory.id : ''),
             data: $scope.currentCategory
 
         }).then(function (response) {
@@ -160,14 +118,39 @@ function CategoryController($scope, $http, $rootScope, $timeout, Upload, $q) {
 
     $scope.uploadImage = async function (file) {
         if (file) {
-            var image = await $scope.upload(file);
+            var image = await upload([file]);
             if (image) {
                 $scope.$applyAsync(function () {
-                    $scope.currentCategory.image_url = image;
+                    $scope.currentCategory.image_url = image[0];
                 });
             }
         }
     }
+
+    function upload(files)
+    {
+        var formData = new FormData();
+        files.forEach(function (element) {
+            formData.append('images[]', element);
+        });
+
+        return new Promise(function (resolve, reject) {
+            $http.post('/api/category/upload-image', formData, {
+                transformRequest: angular.identity,
+                headers: {'Content-Type': undefined}
+            })
+                .then(function (response) {
+                    if (response.data.status == 'successful') {
+                        resolve(response.data.result);
+                    } else {
+                        reject([]);
+                    }
+                }).catch(function (response) {
+                    reject([]);
+                });
+        });
+    }
+
 
     initialize();
 }

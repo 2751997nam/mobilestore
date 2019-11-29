@@ -55,7 +55,6 @@
     var categoryType = '{{ $categoryType }}';
 </script>
 
-<script src="/vendor/laravel-filemanager/js/lfm.js"></script>
 <script type="text/javascript" src="/system/js/controllers/category-controller.js?v=<?= Config::get("sa.version") ?>"></script>
 
 @endsection
@@ -106,9 +105,9 @@
                                     @{{ $index + 1 }}
                                 </td>
                                 <td class="text-center" ng-click="openCategory(category)">
-                                    <img ng-src="@{{ getImageCdn(category.image_url, 50, 50) }}" />
+                                    <img style="width: 50px; height: 50px" ng-src="@{{ category.image_url }}" />
                                 </td>
-                                <td style="vertical-align: middle;" ng-click="openCategory(category)" ng-bind-html="category.display"></td>
+                                <td style="vertical-align: middle;" ng-click="openCategory(category)" ng-bind-html="category.name"></td>
                                 <td class="text-center" style="vertical-align: middle;" ng-click="openCategory(category)">@{{ category.sorder }}</td>
                                 <td class="text-center" style="vertical-align: middle;" ng-click="openCategory(category)">
                                     @{{ (category.is_hidden == 0)? 'Hiển thị' : 'Ẩn' }}

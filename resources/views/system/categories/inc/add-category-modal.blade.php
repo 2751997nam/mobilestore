@@ -25,22 +25,11 @@
                                </span>
                                 <input id="thumbnail" class="form-control" type="text" name="filepath" ng-model="currentCategory.image_url">
                             </div>
-                            <img id="holder" style="margin-top:15px;max-height:100px;" ng-src="{{ getImageCdn(currentCategory.image_url, <?= 0 ?>, <?= $width ?>) }}">
+                            <img id="holder" style="margin-top:15px;max-height:100px;" ng-src="@{{ currentCategory.image_url }}">
                         </div>
                         <div class="form-group">
                             <label>Tên danh mục *</label>
                             <input id="categoryName" type="text" class="form-control" ng-model="currentCategory.name">
-                        </div>
-
-                        <div class="form-group" ng-if="categoryType == 'PRODUCT'">
-                            <label>Danh mục cha</label>
-                            <select class="form-control" name="" ng-model="currentCategory.parent_id">
-                                <option value="">-- Danh mục gốc --</option>
-                                <option ng-selected="currentCategory.parent_id == category.id"
-                                        ng-repeat="category in categories"
-                                        ng-if="category.id !== currentCategory.id"
-                                        ng-value="category.id" ng-bind-html="category.display"></option>
-                            </select>
                         </div>
                         <div class="form-group">
                             <label>Mô tả</label>
@@ -55,14 +44,6 @@
                         <div class="form-group">
                             <label>Độ ưu tiên</label>
                             <input type="number" min="0" autocomplete="false" id="number" name="" value="" class="form-control" ng-model="currentCategory.sorder">
-                        </div>
-                        <div class="form-group">
-                            <label>Meta title</label>
-                            <input name="text" value="" class="form-control" ng-model="currentCategory.meta_title"></input>
-                        </div>
-                        <div class="form-group">
-                            <label>Meta description</label>
-                            <textarea name="" ng-keyup="$event.stopPropagation();" value="" class="form-control" ng-model="currentCategory.meta_description"></textarea>
                         </div>
                         <div class="form-group">
                             <label>Trạng thái</label>
