@@ -30,7 +30,10 @@ class IndexController extends Controller
             View::share('categoryType', 'PRODUCT');
             $view = ("system.$subModule.index");
         }
-        if ($module == 'products' && !in_array($subModule, ['new', 'import', 'categories'])) {
+        if ($module == 'products' && $subModule == 'brand') {
+            $view = ("system.$subModule.index");
+        }
+        if ($module == 'products' && !in_array($subModule, ['new', 'import', 'categories', 'brand'])) {
             View::share('id', $subModule);
             $view = ("system.$module.new");
         }
@@ -38,7 +41,7 @@ class IndexController extends Controller
             View::share('id', $subModule);
             $view = ("system.$module.detail");
         }
-        if ( $module == 'posts' && !in_array($subModule, ['new', 'categories'])) {
+        if ( $module == 'posts' && !in_array($subModule, ['new', 'categories', 'brand'])) {
             View::share('id', $subModule);
             $view = ("system.$module.new");
         }

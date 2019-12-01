@@ -37,6 +37,10 @@ Route::group(['prefix' => '/', 'namespace' => '\\Api'], function () {
 
     Route::group(['prefix' => 'brand', 'as' => 'brand.'], function () {
         Route::get('/', 'BrandController@index');
+        Route::post('/', 'BrandController@store');
+        Route::put('/{id}', 'BrandController@update');
+        Route::delete('/{id}', 'BrandController@delete');
+        Route::post('/upload-image', 'BrandController@uploadImage');
     });
 
     Route::get('/province', 'LocationController@getProvinces');

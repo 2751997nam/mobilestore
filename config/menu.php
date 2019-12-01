@@ -57,6 +57,11 @@
                     'title' => 'Danh mục',
                     'url' => '/admin/products/categories',
                 ],
+                [
+                    'icon' => '',
+                    'title' => 'Thương hiệu',
+                    'url' => '/admin/products/brand',
+                ],
             ]
         ],
         [
