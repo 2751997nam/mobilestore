@@ -13,9 +13,14 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function search(Request $request)
+    public function search(Request $request, $id = null)
     {
+        if (!empty($id)) {
+            $request->merge(['category' => [$id]]);
+        }
+
         $data = \App::call('App\Http\Controllers\Api\ProductController@search', $request->all());
+        // dd($data);
         return view('frontend.product.search', compact('data'));
     }
 
@@ -26,7 +31,7 @@ class ProductController extends Controller
 
     public function show($slug, $id)
     {
-        $product = Product::with(['galleries.image_url', 'categories'])->where('id', $id)->first();
+        $product = Product::with(['galleries', 'categories'])->where('id', $id)->first();
 
         return view('frontend.product.detail', compact('product'));
     }

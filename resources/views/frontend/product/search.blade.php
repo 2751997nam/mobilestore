@@ -10,14 +10,6 @@
 @section('content')
 	<!-- Home -->
 
-	<div class="home">
-		<div class="home_background parallax-window" data-parallax="scroll" data-image-src="images/shop_background.jpg"></div>
-		<div class="home_overlay"></div>
-		<div class="home_content d-flex flex-column align-items-center justify-content-center">
-			<h2 class="home_title">Smartphones & Tablets</h2>
-		</div>
-	</div>
-
 	<!-- Shop -->
 
 	<div class="shop">
@@ -27,7 +19,9 @@
 
 					@include('frontend.product.inc.sidebar', [
                         'categories' => $data['categories'],
-                        'brands' => $data['brands']
+                        'brands' => $data['brands'],
+                        'filters' => $data['filters'],
+                        'displayedFilters' => $data['displayedFilters']
                     ])
 
 				</div>
@@ -45,11 +39,10 @@
 									<li>
 										<span class="sorting_text">Mặc định<i class="fas fa-chevron-down"></span></i>
 										<ul class="text-left">
-											<li class="shop_sorting_button" >Mới nhất</li>
-											<li class="shop_sorting_button" >Mua nhiều nhất</li>
-											<li class="shop_sorting_button" >Giá thấp đến cao</li>
-											<li class="shop_sorting_button" >Giá cao đến thấp</li>
-											<li class="shop_sorting_button" >Giảm giá theo %</li>
+											<li class="shop_sorting_button js-sort" data-type="lastest">Mới nhất</li>
+											<li class="shop_sorting_button js-sort" data-type="low_price">Giá thấp đến cao</li>
+											<li class="shop_sorting_button js-sort" data-type="high_price">Giá cao đến thấp</li>
+											<li class="shop_sorting_button js-sort" data-type="sale">Giảm giá theo %</li>
 										</ul>
 									</li>
 								</ul>
@@ -74,4 +67,7 @@
 		</div>
 	</div>
 @endsection
-	
+
+@section('js')
+    <script src="js/custom/product.js"></script>
+@endsection

@@ -638,7 +638,7 @@ $(document).ready(function()
 			slidesToScroll:5,
 			infinite:false,
 			arrows:false,
-			dots:true,
+			dots:false,
 			responsive:
 			[
 				{

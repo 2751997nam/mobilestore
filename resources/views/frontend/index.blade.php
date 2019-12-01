@@ -12,6 +12,20 @@
         'products' => $newestProducts
     ])
 
-    @include('frontend.common.popular-category')
+    @foreach($popularCategories as $category)
+        @if(isset($category->products) && !$category->products->isEmpty())
+            @include('frontend.common.product-block', [
+                'title' => $category->name,
+                'products' => $category->products
+            ])
+        @endif
+    @endforeach
+
+    @include('frontend.common.popular-category', [
+        'categories' => $popularCategories
+    ])
 @endsection
 
+@section('js')
+    <script src="js/shop_custom.js"></script>
+@endsection

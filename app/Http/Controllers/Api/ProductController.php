@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Models\Brand;
 use App\Models\Product;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Models\ProductGallery;
 use Illuminate\Support\Facades\DB;
@@ -144,6 +145,8 @@ class ProductController extends Controller
             if (!empty($product)) {
                 if (!empty($data['categories'])) {
                     $product->categories()->sync($data['categories']);
+                } else {
+                    $product->categories()->sync([]);
                 }
 
                 if (!empty($data['images'])) {
@@ -279,7 +282,8 @@ class ProductController extends Controller
             'brands' => $brands,
             'priceRange' => $priceRange,
             'meta' => $meta,
-            'filterCategory' => []
+            'filterCategory' => [],
+            'filters' => $request->except(['q', 'page_id', 'page_size'])
         ];
 
         if (isset($filterCategory)) {

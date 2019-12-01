@@ -1394,7 +1394,7 @@ select option
 	justify-content: center;
 	align-items: center;
 	position: relative;
-	width: 19%;
+	width: 24%;
 	background: #FFFFFF;
 	cursor: pointer;
 	padding-top: 40px;
@@ -1436,47 +1436,13 @@ select option
 {
 	color: #df3b3b;
 }
-.product_price span
-{
-	position: relative;
-	font-size: 12px;
-	font-weight: 400;
-	color: rgba(0,0,0,0.6);
-	margin-left: 10px;
-}
-.product_price span::after
-{
-	display: block;
-	position: absolute;
-	top: 6px;
-	left: -2px;
-	width: 100%;
-	height: 1px;
-	background: #8d8d8d;
-	content: '';
-}
+
 .product_name
 {
 	margin-top: 4px;
 	overflow: hidden;
 }
-.product_name div
-{
-	width: 100%;
-	
-}
-.product_name div a
-{
-	font-size: 14px;
-	font-weight: 400;
-	color: #000000;
-	white-space: nowrap;
-	-webkit-transition: all 200ms ease;
-	-moz-transition: all 200ms ease;
-	-ms-transition: all 200ms ease;
-	-o-transition: all 200ms ease;
-	transition: all 200ms ease;
-}
+
 .product_name div a:hover
 {
 	color: #0e8ce4;
@@ -1687,6 +1653,11 @@ select option
 	-ms-transition: all 200ms ease;
 	-o-transition: all 200ms ease;
 	transition: all 200ms ease;
+}
+
+.brands_list li.active a
+{
+    color: #0e8ce4;
 }
 .sidebar_categories li a:hover
 {

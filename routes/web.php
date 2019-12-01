@@ -21,10 +21,11 @@ Route::group(['prefix' => '/admin', 'as' => 'admin.', 'namespace' => '\\System']
     Route::get('/{module}/{subModule}', 'IndexController@subModule')->name('system::submodule');
 });
 
-Route::group(['prefix' => '/', 'namespace' => '\\Frontend'], function () {
+Route::group(['prefix' => '/', 'namespace' => '\\Frontend', 'middleware' => 'header'], function () {
     Route::get('/', 'HomeController@index')->name('index');
     Route::get('/search', 'ProductController@search')->name('product.search');
     Route::get('/{slug}-p-{id}', 'ProductController@show')->name('product.detail')->where('slug', '[0-9a-zA-Z/_\-]+')->where('id', '[0-9]+');
+    Route::get('/{slug}-c-{id}', 'ProductController@search')->name('product.detail')->where('slug', '[0-9a-zA-Z/_\-]+')->where('id', '[0-9]+');
     Route::get('/preview-cart', 'CartController@previewCart')->name('cart.preview');
     Route::post('/add-to-cart', 'CartController@store')->name('cart.store');
     Route::get('/cart', 'CartController@index')->name('cart.index');

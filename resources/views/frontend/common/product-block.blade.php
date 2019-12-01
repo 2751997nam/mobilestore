@@ -28,7 +28,15 @@
                                                     <a href="{{ $product->url }}"><img src="{{ $product->image_url }}" alt=""></a>
                                                 </div>
                                                 <div class="product_content">
-                                                    <div class="product_price">{{ $product->price }}</div>
+                                                    <div class="product_price">
+                                                        {{ $product->display_price }}
+                                                        <br>
+                                                        <span>
+                                                            @if($product->high_price > $product->price)
+                                                                {{ $product->display_high_price }}
+                                                            @endif
+                                                        </span>
+                                                    </div>
                                                     <div class="product_name"><div><a href="{{ $product->url }}">{{ $product->name }}</a></div></div>
                                                     <div class="product_extras">
                                                         <button class="product_cart_button" style="background: #ffffff"></button>

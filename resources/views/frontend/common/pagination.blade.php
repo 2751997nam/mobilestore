@@ -13,11 +13,11 @@
         color: #ffffff;
     }
 </style>
-<div class="shop_page_nav d-flex flex-row">
+<div class="shop_page_nav d-flex flex-row justify-content-center">
     @if($meta['page_count'] > 1)
         {{-- Nút điều hướng : quay lại --}}
         @if($meta['page_id'] > 0)
-            <div class="page_prev d-flex flex-column align-items-center justify-content-center">
+            <div class="page_prev d-flex flex-column align-items-center">
                 <a class="btn-pagination"
                     href="{{ getPaginationPageUrl($meta['page_id'] === 0 ? 0 : $meta['page_id'] - 1) }}">
                     <i class="fas fa-chevron-left"></i>

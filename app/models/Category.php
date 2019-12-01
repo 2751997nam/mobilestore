@@ -40,9 +40,9 @@ class Category extends Model {
 
     public function getUrlAttribute () {
         if ($this->type == 'PRODUCT') {
-            return "/" . $this->slug . "-c" . $this->id . ".html";
+            return "/" . $this->slug . "-c-" . $this->id;
         } else {
-            return "/" . $this->slug . "-a" . $this->id . ".html";
+            return "/" . $this->slug . "-a-" . $this->id;
         }
     }
 

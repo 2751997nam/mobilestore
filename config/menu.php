@@ -37,11 +37,11 @@
                     'title' => 'Danh sách sản phẩm',
                     'url' => '/admin/products',
                 ],
-                [
-                    'icon' => '',
-                    'title' => 'Bộ lọc sản phẩm',
-                    'url' => '/admin/filters',
-                ],
+                // [
+                //     'icon' => '',
+                //     'title' => 'Bộ lọc sản phẩm',
+                //     'url' => '/admin/filters',
+                // ],
                 // [
                 //     'icon' => '',
                 //     'title' => 'Nhập hàng',
@@ -64,28 +64,28 @@
             'title' => 'Khách hàng',
             'url' => '/admin/customers',
         ],
-        [
-            'icon' => '<i class="fa fa-file-text"></i>',
-            'title' => 'Bài viết',
-            'url' => '/admin/posts',
-            'children' => [
-                [
-                    'icon' => '',
-                    'title' => 'Danh sách bài viết',
-                    'url' => '/admin/posts',
-                ],
-                [
-                    'icon' => '',
-                    'title' => 'Tạo bài viết',
-                    'url' => '/admin/posts/new',
-                ],
-                [
-                    'icon' => '',
-                    'title' => 'Danh mục',
-                    'url' => '/admin/posts/categories',
-                ],
-            ]
-        ],
+        // [
+        //     'icon' => '<i class="fa fa-file-text"></i>',
+        //     'title' => 'Bài viết',
+        //     'url' => '/admin/posts',
+        //     'children' => [
+        //         [
+        //             'icon' => '',
+        //             'title' => 'Danh sách bài viết',
+        //             'url' => '/admin/posts',
+        //         ],
+        //         [
+        //             'icon' => '',
+        //             'title' => 'Tạo bài viết',
+        //             'url' => '/admin/posts/new',
+        //         ],
+        //         [
+        //             'icon' => '',
+        //             'title' => 'Danh mục',
+        //             'url' => '/admin/posts/categories',
+        //         ],
+        //     ]
+        // ],
         // [
         //     'icon' => '<i class="fa fa-line-chart"></i>',
         //     'title' => 'Báo cáo & Thống kê',
@@ -158,14 +158,14 @@
         /*[
             'title' => "CÀI ĐẶT"
         ],*/
-        [
-            'icon' => '<i class="fa fa-puzzle-piece"></i>',
-            'title' => 'Ứng dụng',
-            'url' => '/admin/app',
-        ],
-        [
-            'icon' => '<i class="fa fa-gear" aria-hidden="true"></i>',
-            'title' => 'Cài đặt',
-            'url' => '/admin/settings',
-        ],
+        // [
+        //     'icon' => '<i class="fa fa-puzzle-piece"></i>',
+        //     'title' => 'Ứng dụng',
+        //     'url' => '/admin/app',
+        // ],
+        // [
+        //     'icon' => '<i class="fa fa-gear" aria-hidden="true"></i>',
+        //     'title' => 'Cài đặt',
+        //     'url' => '/admin/settings',
+        // ],
     ];
