@@ -633,18 +633,18 @@ $(document).ready(function()
 		})
 		.slick(
 		{
-			rows:2,
+			rows:1,
 			slidesToShow:5,
 			slidesToScroll:5,
-			infinite:false,
-			arrows:false,
+			infinite:true,
+			arrows:true,
 			dots:false,
 			responsive:
 			[
 				{
 					breakpoint:768, settings:
 					{
-						rows:2,
+						rows:1,
 						slidesToShow:3,
 						slidesToScroll:3,
 						dots:true
@@ -653,7 +653,7 @@ $(document).ready(function()
 				{
 					breakpoint:575, settings:
 					{
-						rows:2,
+						rows:1,
 						slidesToShow:2,
 						slidesToScroll:2,
 						dots:false

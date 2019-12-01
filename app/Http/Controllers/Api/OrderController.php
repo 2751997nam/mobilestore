@@ -93,6 +93,8 @@ class OrderController extends Controller
             $query->where('code', 'like', '%' . $request->code . '%');
         }
 
+        $query->orderBy('code', 'desc');
+
         $meta = $this->getMetaData($query, $request);
 
         $orders = $this->paginate($query, $meta['page_size'], $meta['page_id']);

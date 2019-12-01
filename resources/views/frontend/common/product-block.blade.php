@@ -18,7 +18,7 @@
                         <div class="col-lg-12" style="z-index:1;">
                             <!-- Product Panel -->
                             <div class="product_panel panel active">
-                                <div class="arrivals_slider slider">
+                                <div class="arrivals_slider slider arrow-location-right-top">
                                     <!-- Slider Item -->
                                     @foreach($products as $product)
                                         <div class="arrivals_slider_item">
