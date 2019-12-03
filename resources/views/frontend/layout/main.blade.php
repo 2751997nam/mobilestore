@@ -14,9 +14,9 @@
             @include('frontend.layout.header')
 
             @yield('content')
-
-            @include('frontend.common.recent-viewed')
-
+            <div id="js-show-recent-viewed">
+                @include('frontend.common.recent-viewed')
+            </div>
             @include('frontend.common.new-letter')
 
             @include('frontend.layout.footer')

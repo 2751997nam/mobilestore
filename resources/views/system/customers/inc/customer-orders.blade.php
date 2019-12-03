@@ -5,10 +5,10 @@
         color: rgb(33, 43, 54);
     }
 </style>
-<div class="box no-border">
+<div class="box no-border" ng-if="orders.length > 0">
     <div class="box-body">
         <div class="form-group">
-            <div class="">
+            <div>
                 <h3 class="title" style="margin-left: 10px;">Đơn hàng</h3>
                 <div class="box-body table-responsive" >
                     <table class="table table-hover">

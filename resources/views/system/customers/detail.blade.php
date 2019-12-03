@@ -24,7 +24,6 @@
             </div>
                 <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
                     <h3>Thông tin khách hàng</h3>
-                    <button class="btn btn-flat btn-primary" ng-click="openModal(customer)">Sửa</button>
                 </div>
                 @include('system.customers.inc.edit-customer-modal')
                 <div class="product-container">

@@ -43,6 +43,15 @@ Route::group(['prefix' => '/', 'namespace' => '\\Api'], function () {
         Route::post('/upload-image', 'BrandController@uploadImage');
     });
 
+    Route::group(['prefix' => 'customer', 'as' => 'customer.'], function () {
+        Route::get('/', 'CustomerController@index');
+        Route::get('/{id}', 'CustomerController@show');
+        Route::post('/', 'CustomerController@store');
+        Route::put('/{id}', 'CustomerController@update');
+        Route::delete('/{id}', 'CustomerController@delete');
+        Route::post('/upload-image', 'CustomerController@uploadImage');
+    });
+
     Route::get('/province', 'LocationController@getProvinces');
     Route::get('/district', 'LocationController@getDistricts');
     Route::get('/commune', 'LocationController@getCommunes');

@@ -25,7 +25,9 @@
                                             <div class="border_active"></div>
                                             <div class="product_item is_new d-flex flex-column align-items-center justify-content-center text-center">
                                                 <div class="product_image d-flex flex-column align-items-center justify-content-center">
-                                                    <a href="{{ $product->url }}"><img src="{{ $product->image_url }}" alt=""></a>
+                                                    <a href="{{ $product->url }}" class="js-recent-viewed" data-id="{{ $product->id }}">
+                                                        <img src="{{ $product->image_url }}" alt="">
+                                                    </a>
                                                 </div>
                                                 <div class="product_content">
                                                     <div class="product_price">
@@ -37,7 +39,11 @@
                                                             @endif
                                                         </span>
                                                     </div>
-                                                    <div class="product_name"><div><a href="{{ $product->url }}">{{ $product->name }}</a></div></div>
+                                                    <div class="product_name">
+                                                        <div>
+                                                            <a class="js-recent-viewed" data-id="{{ $product->id }}" href="{{ $product->url }}">{{ $product->name }}</a>
+                                                        </div>
+                                                    </div>
                                                     <div class="product_extras">
                                                         <button class="product_cart_button" style="background: #ffffff"></button>
                                                     </div>

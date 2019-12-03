@@ -93,6 +93,10 @@ class OrderController extends Controller
             $query->where('code', 'like', '%' . $request->code . '%');
         }
 
+        if ($request->has('customer_id')) {
+            $query->where('customer_id', $request->customer_id);
+        }
+
         $query->orderBy('code', 'desc');
 
         $meta = $this->getMetaData($query, $request);

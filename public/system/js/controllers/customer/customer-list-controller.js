@@ -44,7 +44,7 @@ function CustomerListController($scope, $http, $rootScope){
 
     $scope.find = (sortBy = "-created_at", searchFilter = "", reset = false) => {
         $scope.customers = [];
-        var url = $scope.buildUrl('/customers');
+        var url = $scope.buildUrl('/api/customer');
         if ( searchFilter == "" ) {
             url += '?sorts=' + sortBy;
         } else {
@@ -56,17 +56,9 @@ function CustomerListController($scope, $http, $rootScope){
         if ( !url.includes('page_id') ) {
             url += '&page_id=0&page_size=20';
         }
-        $scope.cacheFilter('customer_meta', JSON.stringify($scope.meta));
         $http.get(url).then( function(response) {
             if ( response.data.status == 'successful' ) {
                 $scope.customers = response.data.result;
-                $scope.customers.forEach(function(item) {
-                    if (item.orders != null) {
-                        item.amount = sumOrderAmount(item.orders);
-                        item.total = item.orders.length;
-                    }
-                    item.selected = false;
-                })
                 $scope.meta = response.data.meta;
             }
         });
@@ -89,14 +81,6 @@ function CustomerListController($scope, $http, $rootScope){
             $scope.searchByFilter();
         }
     };
-
-    function sumOrderAmount(arr) {
-        var sum = 0;
-        arr.forEach(function(item) {
-            sum += parseInt(item.amount);
-        })
-        return sum;
-    }
 
     $scope.reset = () => {
         $scope.filter = "";
@@ -127,9 +111,6 @@ function CustomerListController($scope, $http, $rootScope){
                 sortBy = '-created_at';
                 break;
         }
-        $scope.cacheFilter('customer_sort', sortBy);
-        $scope.cacheFilter('customer_search_filter', $scope.searchFilter);
-        $scope.cacheFilter('customer_meta', JSON.stringify($scope.meta));
         $scope.find(sortBy, $scope.searchFilter);
     }
 
@@ -172,27 +153,8 @@ function CustomerListController($scope, $http, $rootScope){
         }
     };
 
-    $scope.deleteListCustomers = function () {
-        if ( $scope.selectedCustomers.length <= 0 ) {
-            alert('Vui lòng chọn sản phẩm');
-            return;
-        }
-        var url = $scope.buildDeleteUrl('/customer', $scope.selectedCustomers);
-        $scope.callConfirmDeleteModal({
-            url: url,
-            title: 'xoá khách hàng',
-            text: 'xoá ' + $scope.selectedCustomers.length + ' khách hàng',
-            success: function (result) {
-                $scope.reset();
-            },
-        });
-    }
-
     $scope.search = () => {
         $scope.filter = "Khách hàng mới nhất";
-        $scope.cacheFilter('customer_sort', '-created_at');
-        $scope.cacheFilter('customer_search_filter', $scope.searchFilter);
-        $scope.cacheFilter('customer_meta', JSON.stringify($scope.meta));
         $scope.find("-created_at", $scope.searchFilter, true);
     }
 

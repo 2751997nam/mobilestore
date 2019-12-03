@@ -2,7 +2,7 @@
 
     <!-- Top Bar -->
 
-    <div class="top_bar">
+    <div class="top_bar d-none">
         <div class="container">
             <div class="row">
                 <div class="col d-flex flex-row">
@@ -59,7 +59,7 @@
                         <div class="header_search_content">
                             <div class="header_search_form_container">
                                 <form action="{{ route('product.search') }}" class="header_search_form clearfix">
-                                    <input type="search" name="q" class="header_search_input" placeholder="Tìm kiếm sản phẩm...">
+                                    <input type="search" name="q" value="{{ app('request')->input('q') }}" class="header_search_input" placeholder="Tìm kiếm sản phẩm...">
                                     <div class="custom_dropdown d-none">
                                         <div class="custom_dropdown_list">
                                             <span class="custom_dropdown_placeholder clc">All Categories</span>

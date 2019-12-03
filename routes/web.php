@@ -31,6 +31,8 @@ Route::group(['prefix' => '/', 'namespace' => '\\Frontend', 'middleware' => 'hea
     Route::get('/cart', 'CartController@index')->name('cart.index');
     Route::get('/checkout', 'CartController@checkout')->name('checkout');
     Route::post('/order', 'OrderController@store')->name('order.store');
+    Route::post('/recent-viewed', 'HomeController@recentViewed')->name('home.recent_viewed');
+
 });
 
 Auth::routes();

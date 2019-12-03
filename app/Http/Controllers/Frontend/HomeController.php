@@ -41,4 +41,15 @@ class HomeController extends Controller
         return $categories;
     }
 
+    public function recentViewed(Request $request)
+    {
+        $productIds = $request->get('productIds', '');
+        if (!empty($productIds)) {
+            $recentProducts = Product::whereIn('id', $productIds)->where('status', 'active')->limit(10)->get();
+            return view('frontend.common.recent-viewed', compact('recentProducts'));
+        }
+
+        return '';
+    }
+
 }

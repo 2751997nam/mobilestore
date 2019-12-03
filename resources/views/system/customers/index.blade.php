@@ -68,8 +68,6 @@
         <div class="pull-left">
             <h3 class="">Danh sách khách hàng</h3>
         </div>
-        <a href="/admin/customers/new"><button type="button" name="button"
-                class="btn btn-success btn-flat pull-right add">Thêm khách hàng mới</button></a>
         <div class="clearfix">
         </div>
     </div>
@@ -120,17 +118,12 @@
                             <th >Số điện thoại</th>
                             <th >Email</th>
                             <th >Địa chỉ</th>
-                            <th >Số đơn</th>
-                            <th >Số tiền</th>
                         </tr >
                         <tr class="product-item" ng-repeat="(index,item) in customers" ng-click="navigate(getEditUrl(item))">
                             <td>@{{ item.full_name }}</td>
                             <td><a href="tel:@{{ item.phone }}">@{{ item.display_phone }}</a></td>
                             <td><a href="https://mail.google.com/mail/u/0/?view=cm&tf=1&fs=1&to=@{{ item.email }}">@{{ item.email }}</a></td>
                             <td>@{{ item.address }}</td>
-                            <td>@{{ item.total_order }}</td>
-                            <td class="text-right">@{{ item.total_amount }}</td>
-
                         </tr>
                     </tbody>
                 </table>

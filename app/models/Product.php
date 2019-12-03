@@ -70,7 +70,7 @@ class Product extends Model
     }
 
     public function getDisplayPriceAttribute () {
-        return formatPrice($this->price);
+        return $this->price > 0 ? formatPrice($this->price) : 'Liên hệ';
     }
 
     public function getDisplayHighPriceAttribute () {

@@ -18,7 +18,12 @@
                 <section>
                     <h3 class="title">Địa chỉ</h3>
                     <p>@{{customer.address}}</p>
-                    <p>@{{customer.commune}} <span ng-show="customer.commune">-</span> @{{ customer.district }} <span ng-show="customer.district">-</span> @{{customer.province}}</p>
+                    <p>
+                        <span ng-show="customer.commune">@{{ customer.commune.name }}</span> 
+                        <span ng-show="customer.district"> - @{{ customer.district.name }} </span> 
+                        
+                        <span ng-show="customer.province"> - @{{customer.province.name }}</span>
+                        </p>
                 </section>
             </aside>
         </div>

@@ -74,8 +74,14 @@ class Controller extends BaseController
         return $meta;
     }
 
-    public function paginate($query, $pageSize, $pageId)
+    public function paginate($query, $pageSize, $pageId = null)
     {
+        if (func_num_args() == 2) {
+            $size = $pageSize->get('page_size', 20);
+            $offset = $size * $pageSize->get('page_id', 0);
+            return $query->limit($size)->offset($offset)->get();
+        }
+
         return $query->limit($pageSize)->offset($pageSize * $pageId)->get();
     }
 }

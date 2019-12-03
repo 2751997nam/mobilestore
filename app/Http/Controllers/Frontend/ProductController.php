@@ -13,7 +13,7 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function search(Request $request, $id = null)
+    public function search(Request $request, $slug = null, $id = null)
     {
         if (!empty($id)) {
             $request->merge(['category' => [$id]]);

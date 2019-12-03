@@ -2,7 +2,7 @@
 <div class="product_item" >
     <div class="product_border"></div>
     <div class="product_image d-flex flex-column align-items-center justify-content-center">
-        <a href="{{ $product->url }}">
+        <a href="{{ $product->url }}" class="js-recent-viewed" data-id="{{ $product->id }}">
             <img src="{{ $product->image_url }}" alt="">
         </a>
     </div>
@@ -18,7 +18,11 @@
         </div>
         <div class="product_name">
             <div>
-                <a href="{{ route('product.detail', ['slug' => $product->slug, 'id' => $product->id]) }}" tabindex="0">
+                <a href="{{ route('product.detail', ['slug' => $product->slug, 'id' => $product->id]) }}" 
+                    tabindex="0"
+                    class="js-recent-viewed" 
+                    data-id="{{ $product->id }}"
+                >
                     {{ $product->name }}
                 </a>
             </div>
