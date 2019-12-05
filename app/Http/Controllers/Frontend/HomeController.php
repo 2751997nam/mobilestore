@@ -25,7 +25,9 @@ class HomeController extends Controller
 
         $viewedProducts = $this->getViewedProducts();
 
-        return view('frontend.index', compact('newestProducts', 'popularCategories', 'discountProducts', 'viewedProducts'));
+        $deals = $this->getDeals();
+
+        return view('frontend.index', compact('newestProducts', 'popularCategories', 'discountProducts', 'viewedProducts', 'deals'));
     }
 
     public function getNewestProducts()
@@ -66,6 +68,19 @@ class HomeController extends Controller
                 ->orderBy('discount', 'asc')
                 ->limit(6)
                 ->get();
+
+        return $products;
+    }
+
+    public function getDeals()
+    {
+        $products = Product::select('*')
+        ->addSelect(DB::raw('(price/high_price) as discount'))
+        ->where('price', '>', 0)
+        ->where('high_price', '>', 0)
+        ->orderBy('discount', 'asc')
+        ->limit(3)
+        ->get();
 
         return $products;
     }
