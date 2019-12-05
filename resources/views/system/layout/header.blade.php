@@ -47,16 +47,10 @@
 
                         <!-- Menu Footer-->
                         <li class="user-footer">
-                            {{-- <div class="pull-left"> --}}
-                                <a href="https://shopbay.vn/websites" class="btn btn-default btn-flat">
-                                    <i class="fa fa-bars"></i>
-                                    Cửa hàng của bạn</a>
-                            {{-- </div> --}}
-                            {{-- <div class="pull-right"> --}}
-                                <a href="https://shopbay.vn/logout?token={{ \Session::get('ssoToken') }}" class="btn btn-default btn-flat">
-                                    <i class="fa fa-sign-out"></i>
-                                    Đăng xuất</a>
-                            {{-- </div> --}}
+                            <a href="{{ route('logout') }}" class="btn btn-default btn-flat">
+                                <i class="fa fa-sign-out"></i>
+                                Đăng xuất
+                            </a>
                         </li>
                     </ul>
                 </li>

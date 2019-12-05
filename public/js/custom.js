@@ -424,11 +424,11 @@ $(document).ready(function()
 		.slick(
 		{
 			rows:2,
-			slidesToShow:4,
-			slidesToScroll:4,
+			slidesToShow:3,
+			slidesToScroll:3,
 			infinite:false,
 			arrows:false,
-			dots:true,
+			dots:false,
 			responsive:
 			[
 				{
@@ -437,7 +437,7 @@ $(document).ready(function()
 						rows:2,
 						slidesToShow:3,
 						slidesToScroll:3,
-						dots:true
+						dots:false
 					}
 				},
 				{

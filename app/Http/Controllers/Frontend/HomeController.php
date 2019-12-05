@@ -3,9 +3,10 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Models\Product;
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use App\Models\Category;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 
 class HomeController extends Controller
 {
@@ -20,7 +21,11 @@ class HomeController extends Controller
 
         $popularCategories = $this->getPopularCategories();
 
-        return view('frontend.index', compact('newestProducts', 'popularCategories'));
+        $discountProducts = $this->getDiscountProducts();
+
+        $viewedProducts = $this->getViewedProducts();
+
+        return view('frontend.index', compact('newestProducts', 'popularCategories', 'discountProducts', 'viewedProducts'));
     }
 
     public function getNewestProducts()
@@ -50,6 +55,26 @@ class HomeController extends Controller
         }
 
         return '';
+    }
+
+    public function getDiscountProducts()
+    {
+        $products = Product::select('*')
+                ->addSelect(DB::raw('(price/high_price) as discount'))
+                ->where('price', '>', 0)
+                ->where('high_price', '>', 0)
+                ->orderBy('discount', 'asc')
+                ->limit(6)
+                ->get();
+
+        return $products;
+    }
+
+    public function getViewedProducts()
+    {
+        $products = Product::orderBy('view_count', 'desc')->limit(8)->get();
+
+        return $products;
     }
 
 }

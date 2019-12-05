@@ -11,8 +11,8 @@ use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 class User extends Model implements AuthenticatableContract, AuthorizableContract
 {
     use Authenticatable, Authorizable;
-    use \App\Models\Multitenantable;
 
+    protected $table = 'user';
     /**
      * The attributes that are mass assignable.
      *

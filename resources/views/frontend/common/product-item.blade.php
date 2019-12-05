@@ -3,7 +3,7 @@
     <div class="product_border"></div>
     <div class="product_image d-flex flex-column align-items-center justify-content-center">
         <a href="{{ $product->url }}" class="js-recent-viewed" data-id="{{ $product->id }}">
-            <img src="{{ $product->image_url }}" alt="">
+            <img src="{{ $product->display_image_url }}" alt="">
         </a>
     </div>
     <div class="product_content">

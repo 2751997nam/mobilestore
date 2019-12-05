@@ -15,7 +15,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::group(['prefix' => '/admin', 'as' => 'admin.', 'namespace' => '\\System'], function () {
+Route::group(['prefix' => '/admin', 'as' => 'admin.', 'namespace' => '\\System', 'middleware' => 'auth'], function () {
     Route::get('/', 'IndexController@index');
     Route::get('/{module}', 'IndexController@module')->name('system::module');
     Route::get('/{module}/{subModule}', 'IndexController@subModule')->name('system::submodule');
@@ -35,4 +35,5 @@ Route::group(['prefix' => '/', 'namespace' => '\\Frontend', 'middleware' => 'hea
 
 });
 
+Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout');
 Auth::routes();

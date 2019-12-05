@@ -32,6 +32,8 @@ class ProductController extends Controller
     public function show($slug, $id)
     {
         $product = Product::with(['galleries', 'categories'])->where('id', $id)->first();
+        $product->view_count = $product->view_count + 1;
+        $product->save();
 
         return view('frontend.product.detail', compact('product'));
     }

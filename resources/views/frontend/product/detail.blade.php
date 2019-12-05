@@ -32,16 +32,16 @@
 				<!-- Images -->
 				<div class="col-lg-2 order-lg-1 order-2">
 					<ul class="image_list">
-						<li data-image="{{ $product->image_url }}"><img src="{{ $product->image_url }}" alt=""></li>
+						<li data-image="{{ $product->display_image_url }}"><img src="{{ $product->display_image_url }}" alt=""></li>
                         @foreach ($product->galleries as $gallery)
-						    <li data-image="{{ $gallery->image_url }}"><img src="{{ $gallery->image_url }}" alt=""></li>
+						    <li data-image="{{ $gallery->display_image_url }}"><img src="{{ $gallery->display_image_url }}" alt=""></li>
                         @endforeach
 					</ul>
 				</div>
 
 				<!-- Selected Image -->
 				<div class="col-lg-5 order-lg-2 order-1">
-					<div class="image_selected"><img src="{{ $product->image_url }}" alt=""></div>
+					<div class="image_selected"><img src="{{ $product->display_image_url }}" alt=""></div>
 				</div>
 
 				<!-- Description -->

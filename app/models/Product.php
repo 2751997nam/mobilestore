@@ -35,7 +35,7 @@ class Product extends Model
     protected $variantDefault = null;
 
     protected $appends = [
-        'display_price', 'display_high_price', 'editUrl', 'url'
+        'display_price', 'display_high_price', 'editUrl', 'url', 'display_image_url'
     ];
 
     const DAY_OF_NEW = 10;
@@ -75,6 +75,10 @@ class Product extends Model
 
     public function getDisplayHighPriceAttribute () {
         return formatPrice($this->high_price);
+    }
+
+    public function getDisplayImageUrlAttribute() {
+        return file_exists(public_path() . $this->image_url) ? $this->image_url : '/images/default.jpg';
     }
 
     protected static function boot()

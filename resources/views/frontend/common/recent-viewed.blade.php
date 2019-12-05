@@ -20,7 +20,7 @@
                                 <div class="viewed_item discount d-flex flex-column align-items-center justify-content-center text-center">
                                     <div class="viewed_image">
                                     <a href="{{ $product->url }}" class="js-recent-viewed" data-id="{{ $product->id }}">
-                                            <img src="{{ $product->image_url }}" alt="{{ $product->name }}">
+                                            <img src="{{ $product->display_image_url }}" alt="{{ $product->name }}">
                                         </a> 
                                     </div>
                                     <div class="viewed_content text-center">
