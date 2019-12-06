@@ -79,7 +79,7 @@
                                 <tbody>
                                     <tr ng-if="selectedProducts.length > 0" ng-repeat="item in selectedProducts">
                                         <td style="min-width: 50px">
-                                            <img ng-src="@{{ item.image_url }}" alt="@{{ item.name }}" style="width: 100%">
+                                            <img ng-src="@{{ item.display_image_url }}" alt="@{{ item.name }}" style="width: 100%">
                                         </td>
                                         <td style="min-width: 200px;">@{{ item.name }}</td>
                                         <td class="price">@{{ formatCurrency(item.price) }}</td>

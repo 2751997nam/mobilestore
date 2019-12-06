@@ -19,7 +19,7 @@ class OrderItem extends Model
     ];
 
     protected $appends = [
-        'name'
+        'name', 'display_image_url'
     ];
 
     public function product()
@@ -30,5 +30,9 @@ class OrderItem extends Model
     public function getNameAttribute()
     {
         return $this->product_name;
+    }
+
+    public function getDisplayImageUrlAttribute() {
+        return file_exists(public_path() . $this->image_url) ? $this->image_url : '/images/default.jpg';
     }
 }

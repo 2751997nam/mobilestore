@@ -23,7 +23,7 @@
                         <span ng-if="!(!order || isEditable())" class="price col-md-12 col-xs-12 p-0 text-right">@{{ formatCurrency(orderInfo.subtotal) }} <sup>đ</sup></span>
                     </td>
                 </tr>
-                <tr>
+                <tr class="d-none">
                     <td class="text-right">Giảm giá</td>
                     <td class="price text-left" ng-if="!order || isEditable()">
                         <div class="col-md-10 col-xs-10  p-0">
@@ -53,7 +53,7 @@
                         <span class="col-md-12 col-xs-12 price p-0">@{{ formatCurrency(orderInfo.discount) }} <sup>đ</sup></span>
                     </td>
                 </tr>
-                <tr>
+                <tr class="d-none">
                     <td class="text-right">Phí giao hàng</td>
                     <td>
                         <span ng-if="!order || isEditable()">

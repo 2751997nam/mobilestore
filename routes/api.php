@@ -18,37 +18,37 @@ use Illuminate\Http\Request;
 // });
 
 Route::group(['prefix' => '/', 'namespace' => '\\Api'], function () {
-    Route::group(['prefix' => 'product', 'as' => 'product.'], function () {
+    Route::group(['prefix' => 'product'], function () {
         Route::get('/', 'ProductController@index');
-        Route::get('/{id}', 'ProductController@show');
-        Route::put('/{id}', 'ProductController@update');
+        Route::get('/{id}', 'ProductController@show')->where('id', '[0-9]+');
+        Route::put('/{id}', 'ProductController@update')->where('id', '[0-9]+');
         Route::post('/', 'ProductController@store');
         Route::post('/upload-image', 'ProductController@uploadImage');
         Route::get('/search', 'ProductController@search');
     });
     
-    Route::group(['prefix' => 'category', 'as' => 'category.'], function () {
+    Route::group(['prefix' => 'category'], function () {
         Route::get('/', 'CategoryController@index');
         Route::post('/', 'CategoryController@store');
-        Route::put('/{id}', 'CategoryController@update');
-        Route::delete('/{id}', 'CategoryController@delete');
+        Route::put('/{id}', 'CategoryController@update')->where('id', '[0-9]+');
+        Route::delete('/{id}', 'CategoryController@delete')->where('id', '[0-9]+');
         Route::post('/upload-image', 'CategoryController@uploadImage');
     });
 
-    Route::group(['prefix' => 'brand', 'as' => 'brand.'], function () {
+    Route::group(['prefix' => 'brand'], function () {
         Route::get('/', 'BrandController@index');
         Route::post('/', 'BrandController@store');
-        Route::put('/{id}', 'BrandController@update');
-        Route::delete('/{id}', 'BrandController@delete');
+        Route::put('/{id}', 'BrandController@update')->where('id', '[0-9]+');
+        Route::delete('/{id}', 'BrandController@delete')->where('id', '[0-9]+');
         Route::post('/upload-image', 'BrandController@uploadImage');
     });
 
-    Route::group(['prefix' => 'customer', 'as' => 'customer.'], function () {
+    Route::group(['prefix' => 'customer'], function () {
         Route::get('/', 'CustomerController@index');
-        Route::get('/{id}', 'CustomerController@show');
+        Route::get('/{id}', 'CustomerController@show')->where('id', '[0-9]+');
         Route::post('/', 'CustomerController@store');
-        Route::put('/{id}', 'CustomerController@update');
-        Route::delete('/{id}', 'CustomerController@delete');
+        Route::put('/{id}', 'CustomerController@update')->where('id', '[0-9]+');
+        Route::delete('/{id}', 'CustomerController@delete')->where('id', '[0-9]+');
         Route::post('/upload-image', 'CustomerController@uploadImage');
     });
 
@@ -57,7 +57,7 @@ Route::group(['prefix' => '/', 'namespace' => '\\Api'], function () {
     Route::get('/commune', 'LocationController@getCommunes');
     Route::get('/order', 'OrderController@index');
     Route::post('/order', 'OrderController@store')->name('api.order.store');
-    Route::get('/order/{id}', 'OrderController@show');
-    ROute::put('/order/{id}', 'OrderController@update');
-    Route::patch('/order/{id}', 'OrderController@updateStatus');
+    Route::get('/order/{id}', 'OrderController@show')->where('id', '[0-9]+');
+    ROute::put('/order/{id}', 'OrderController@update')->where('id', '[0-9]+');
+    Route::patch('/order/{id}', 'OrderController@updateStatus')->where('id', '[0-9]+');
 });

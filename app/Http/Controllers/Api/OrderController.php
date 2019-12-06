@@ -158,6 +158,79 @@ class OrderController extends Controller
         return $retVal;
     }
 
+    public function generateCode()
+    {
+        $code = Cache::get('order::code');
+        if (empty($code)) {
+            $code = 100001;
+        } else {
+            $code = $code + 1;
+        }
+        Cache::forever('order::code', $code);
+
+        return $code;
+    }
+
+    public function createOrUpdateCustomer($data)
+    {
+        $customer = Customer::where('phone', $data['phone'])->first();
+        if (empty($customer)) {
+            $customer = Customer::create($data);
+        } else {
+            $customer->update($data);
+        }
+
+        return $customer;
+    }
+
+    public function store(Request $request)
+    {
+        $retval = ['status' => 'successful', 'message' => 'Tạo đơn hàng thành công'];
+
+        $retval = $this->validateOrder($request, true);
+        try {
+            if ($retval['status'] === 'successful') {
+                $data = $request->all();
+                $code = $this->generateCode();
+                $data['code'] = $code;
+                $customer = $this->createOrUpdateCustomer($data['customer']);
+                if (!empty($customer)) {
+                    $data['customer_id'] = $customer->id;
+                }
+                $data['status'] = 'PROCESSING';
+                $order = Order::create($data);
+                $result = $this->syncOrderItem($order, $data);
+                if ($result['status'] !== 'successful') {
+                    Order::destroy($order->id);
+                    $retval = ['status' => 'failed', 'message' => 'Không tìm thấy sản phẩm'];
+                }
+            }
+        } catch (\Exception $ex) {
+            $retval = [
+                'status' => 'failed',
+                'message' => $ex->getMessage() . '. Line: ' . $ex->getLine() . ' . File: ' . $ex->getFile()
+            ];
+        }
+
+        $code = $retval['status'] === 'successful' ? 200 : 422;
+
+        return response()->json($retval, $code);
+    }
+
+    public function syncOrderItem($order, $data)
+    {
+        $retval = ['status' => 'successful'];
+        $count = count($data['items']);
+        for ($i = 0; $i < $count; $i++) {
+            if (empty($data['items'][$i]['price'])) {
+                $data['items'][$i]['price'] = 0;
+            }
+        }
+        $order->products()->sync($data['items']);
+
+        return $retval;
+    }
+
     public function update(Request $request, $id)
     {
         $retval = $this->validateOrder($request);
@@ -190,7 +263,7 @@ class OrderController extends Controller
                 }
                 DB::commit();
     
-                return $this->responseSuccess('create order success');
+                return $this->responseSuccess('update order success');
             } catch (\Exception $ex) {
                 DB::rollback();
                 return $this->responseFail($ex->getMessage() . ' File:' . $ex->getFile() . ' Line: ' . $ex->getLine());

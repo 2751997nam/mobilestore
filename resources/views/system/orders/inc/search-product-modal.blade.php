@@ -29,7 +29,7 @@
                             class="product-thumbnail mr-2"
                             ng-repeat="product in checkedProducts"
                         >
-                            <img ng-src="@{{ product.image_url }}" :alt="product.name" class="adminImageSearch">
+                            <img ng-src="@{{ product.display_image_url }}" :alt="product.name" class="adminImageSearch">
                             <a class="btn-remove" href="javascript:void(0)" ng-click="removeCheckedProduct(product)">
                                 <i class="fa fa-times-circle"></i>
                             </a>
@@ -56,7 +56,7 @@
                                         >
                                     </td>
                                     <td>
-                                        <img class="adminImageSearch" ng-src="@{{ product.image_url }}" alt="@{{ product.name }}">
+                                        <img class="adminImageSearch" ng-src="@{{ product.display_image_url }}" alt="@{{ product.name }}">
                                     </td>
                                     <td>@{{ product.name }}</td>
                                     <td class="price">@{{ formatCurrency(product.price) }}</td>

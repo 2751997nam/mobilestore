@@ -310,12 +310,10 @@ function CreateOrderController($scope, $http, $rootScope)
     $scope.searchCustomer = function ()
     {
         $('#js-input-search').focus();
-        var url = '/customer?';
+        var url = '/api/customer';
         $scope.searchCustomerQuery = $('#js-input-search').val();
         if ($scope.searchCustomerQuery) {
-            url += '&sorts=raw(-name)&fields=*,raw(match(full_name) AGAINST("' + $scope.searchCustomerQuery + '") as name)&filters=raw=MATCH(`full_name`) AGAINST("' + $scope.searchCustomerQuery +'") or `full_name` like "%' + $scope.searchCustomerQuery + '%" or `phone` like "' + $scope.searchCustomerQuery + '%"';
-        } else {
-            url += '&sorts=-created_at';
+            url += '?search=' + $scope.searchCustomerQuery;
         }
         url = $scope.buildUrl(url);
         $http.get(url).then(function (response) {
@@ -357,11 +355,10 @@ function CreateOrderController($scope, $http, $rootScope)
                 price: products[i].price,
                 image_url: products[i].image_url,
             };
-            if (typeof products[i].product_sku_id != 'undefined') {
+            if (products[i].product_id) {
                 item.product_id = products[i].product_id;
-                item.product_sku_id = products[i].product_sku_id;
             } else {
-                item.product_id = products[i].id;
+                item.product_id = products[i].product_id;
             }
             data.items.push(item);
         }
@@ -395,7 +392,7 @@ function CreateOrderController($scope, $http, $rootScope)
         var data = $scope.getPreparedData();
         $scope.disabledSave = true;
         $http({
-            url: $scope.buildUrl('/order'),
+            url: $scope.buildUrl('/api/order'),
             method: 'POST',
             data: JSON.stringify(data),
             headers: {
@@ -403,7 +400,7 @@ function CreateOrderController($scope, $http, $rootScope)
             },
         }).then(function (response) {
             $scope.showSuccessModal('thêm đơn hàng', function () {
-                window.location.href = '/admin/orders';
+                // window.location.href = '/admin/orders';
             });
         }).catch(function (error) {
             if (error.status == 422) {
