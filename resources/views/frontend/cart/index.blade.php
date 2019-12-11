@@ -15,7 +15,7 @@
 
 @section('content')
     <input type="hidden" id="js-cart-item" value="{{ json_encode($cartItems) }}" />
-	<div class="cart_section" ng-app="myApp" ng-controller="CartController">
+	<div class="cart_section" ng-app="myApp" ng-controller="CartController" ng-cloak>
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-10 offset-lg-1">
@@ -68,7 +68,7 @@
 						</div>
 
 						<div class="cart_buttons">
-							<a href="{{ route('index') }}" type="button" class="button cart_button_clear">Quay lại</a>
+							<a href="{{ route('product.search') }}" type="button" class="button cart_button_clear">Quay lại</a>
 							<a href="{{ route('checkout') }}" ng-if="cartItems.length > 0" type="button" class="button cart_button_checkout">Đặt hàng</a>
 						</div>
 					</div>

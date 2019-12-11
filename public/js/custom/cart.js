@@ -24,6 +24,7 @@ app.controller('CartController', function($scope, $http) {
                 if (response.data.status == 'successful') {
                     $scope.cartItems.splice(index, 1);
                     $scope.calculateTotal();
+                    $('.cart_count span').text($scope.cartItems.length);
                 } else {
                     alert('Đã xảy ra lỗi');
                 }

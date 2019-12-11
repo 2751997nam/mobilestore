@@ -143,10 +143,7 @@ class OrderController extends Controller
             $data = $request->all();
             DB::beginTransaction();
             try {
-                $customer = Customer::updateOrCreate(
-                    ['phone' => $request->phone],
-                    $data['customer']
-                );
+                $customer = $this->createOrUpdateCustomer($data['customer']);
         
                 $cart = Cart::where('token', $sessionId)->where('status', 'pending')->first();
                 if (!empty($cart)) {
@@ -192,6 +189,18 @@ class OrderController extends Controller
                 return $this->responseFail($ex->getMessage() . ' File:' . $ex->getFile() . ' Line: ' . $ex->getLine());
             }
         }
+    }
+
+    public function createOrUpdateCustomer($data)
+    {
+        $customer = Customer::where('phone', $data['phone'])->first();
+        if (empty($customer)) {
+            $customer = Customer::create($data);
+        } else {
+            $customer->update($data);
+        }
+
+        return $customer;
     }
 
     public function generateCode()

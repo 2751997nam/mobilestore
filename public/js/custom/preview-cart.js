@@ -36,7 +36,7 @@ $(document).ready(function () {
     });
 
     $(document).on('click', '.cart', function () {
-        if ($(this).is(':empty')) {
+        if ($('#cart-preview').hasClass('d-none')) {
             let result = loadPreview();
             result.then(function (response) {
                 $('#cart-preview').toggleClass('d-none');

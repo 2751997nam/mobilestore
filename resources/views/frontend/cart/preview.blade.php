@@ -7,7 +7,7 @@
         @foreach($cartItems as $item)
             <div class="cart-items">
                 <div class="item-image">
-                    <img src="{{ $item->image_url }}" alt="">
+                    <img src="{{ $item->display_image_url }}" alt="">
                 </div>
                 <div class="item-info">
                     <div class="item-title">
