@@ -83,7 +83,7 @@ class OrderController extends Controller
     ];
 
     public function index(Request $request) {
-        $query = Order::with('items');
+        $query = Order::with(['items', 'customer']);
         if ($request->has('status')) {
             $status = explode(';', $request->status);
             $query->whereIn('status', $status);

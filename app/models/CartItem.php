@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\Model;
 class CartItem extends Model
 {
     protected $table = "cart_item";
-    protected $appends = ['display_price', 'url', 'total'];
+    protected $appends = ['display_price', 'url', 'total', 'display_image_url'];
     protected $fillable = [
         'cart_id',
         'product_id',
@@ -23,6 +23,10 @@ class CartItem extends Model
         'price',
         'image_url',
     ];
+
+    public function getDisplayImageUrlAttribute() {
+        return file_exists(public_path() . $this->image_url) ? $this->image_url : '/images/default.jpg';
+    }
 
     public function getDisplayPriceAttribute() {
         return number_format($this->price, 0, ',', '.').' ₫';

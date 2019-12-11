@@ -45,7 +45,7 @@ class ProductController extends Controller
 
     public function index(Request $request)
     {
-        $query = Product::with(['categories', 'brand'])->orderBy('created_at', 'desc');
+        $query = Product::select('*')->with(['categories', 'brand'])->orderBy('created_at', 'desc');
         $meta = $this->getMetaData($query, $request);
         $products = $this->paginate($query, $meta['page_size'], $meta['page_id']);
 

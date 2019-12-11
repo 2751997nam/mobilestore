@@ -65,7 +65,7 @@
     <div class="header">
         <div class="pull-left">
             <h3 class="">Danh sách sản phẩm</h3>
-            <div class="import-export">
+            <div class="import-export d-none">
                 <a href="#" class="d-none"><i class="fa fa-upload"></i> Xuất</a>
                 <a href="/admin/products/import"><i class="fa fa-download"></i> Nhập</a>
             </div>

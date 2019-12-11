@@ -13,5 +13,5 @@
 <script src="plugins/Isotope/isotope.pkgd.min.js"></script>
 <script src="plugins/jquery-ui-1.12.1.custom/jquery-ui.js"></script>
 <script src="plugins/parallax-js-master/parallax.min.js"></script>
-<script src="/js/custom/cart.js"></script>
+<script src="/js/custom/preview-cart.js"></script>
 <script src="/js/custom/recent-viewed.js"></script>

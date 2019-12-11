@@ -29,6 +29,7 @@ Route::group(['prefix' => '/', 'namespace' => '\\Frontend', 'middleware' => 'hea
     Route::get('/preview-cart', 'CartController@previewCart')->name('cart.preview');
     Route::post('/add-to-cart', 'CartController@store')->name('cart.store');
     Route::get('/cart', 'CartController@index')->name('cart.index');
+    Route::delete('/cart/{id}', 'CartController@removeItem')->where('id', '[0-9]+');
     Route::get('/checkout', 'CartController@checkout')->name('checkout');
     Route::post('/order', 'OrderController@store')->name('order.store');
     Route::post('/recent-viewed', 'HomeController@recentViewed')->name('home.recent_viewed');

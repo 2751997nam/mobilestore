@@ -18,9 +18,7 @@ class ProductController extends Controller
         if (!empty($id)) {
             $request->merge(['category' => [$id]]);
         }
-
         $data = \App::call('App\Http\Controllers\Api\ProductController@search', $request->all());
-        // dd($data);
         return view('frontend.product.search', compact('data'));
     }
 

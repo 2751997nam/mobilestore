@@ -92,4 +92,15 @@ class CartController extends Controller
         return view('frontend.cart.checkout');
     }
 
+    public function removeItem($id)
+    {
+        $sessionId = session()->getId();
+        $cartItem = CartItem::where('id', $id)->first();
+        if (!empty($cartItem)) {
+            $cartItem->delete();
+        }
+
+        return $this->responseSuccess('ok');
+    }
+
 }

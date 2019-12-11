@@ -16,6 +16,8 @@ function ProductListController($scope, $http, $rootScope) {
         price: "Khoảng giá"
     };
 
+    $scope.isFiltering = false;
+
     $scope.initialize = function ()
     {
         $scope.getProducts();
@@ -32,6 +34,19 @@ function ProductListController($scope, $http, $rootScope) {
         url = $scope.buildPainationUrl(url);
         $http.get(url).then(function (response) {
             if (response.data.status == 'successful') {
+                $scope.products = response.data.result;
+                $scope.meta = response.data.meta;
+            }
+        });
+    }
+
+    $scope.searchProduct = function () {
+        let url = '/api/product';
+        url = $scope.buildPainationUrl(url);
+        url += '&q=' + $scope.search;
+        $http.get(url).then(function (response) {
+            if (response.data.status == 'successful') {
+                $scope.isFiltering = true;
                 $scope.products = response.data.result;
                 $scope.meta = response.data.meta;
             }

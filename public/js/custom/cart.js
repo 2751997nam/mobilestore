@@ -1,48 +1,55 @@
-$(document).ready(function () {
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-        },
-    });
+var app = angular.module('myApp', []);
 
-    function loadPreview() {
-        return $.ajax({
-            url: '/preview-cart',
-            method: 'get',
-            success: function (response) {
-                $('#cart-preview').html(response);
-                let count = 0;
-    
-                let elements = $('.item-info .item-quantity');
-                if (elements.length > 0) {
-                    for (let i = 0; i < elements.length; i++) {
-                        count += parseInt($(elements[i]).attr('data-quantity'));
-                    }
-                }
-                let url = window.location.href;
-                if (count == 0 && url.indexOf('/checkout') >= 0) {
-                    window.location.href = '/cart';
-                }
-    
-                $('.cart_count span').text(count);
-            }
+app.controller('CartController', function($scope, $http) {
+
+    $scope.cartItems = [];
+    $scope.total = 0;
+
+    $scope.initialize = function () {
+        let items = $('#js-cart-item').val();
+        $scope.cartItems = JSON.parse(items);
+        $scope.calculateTotal();
+    }
+
+    $scope.calculateTotal = function () {
+        $scope.total = 0;
+        $scope.cartItems.forEach(function (item) {
+            $scope.total += item.price * item.quantity;
         });
     }
 
-    loadPreview();
-
-    $(document).on('click', '.cart-close', function () {
-        $('#cart-preview').addClass('d-none');
-    });
-
-    $(document).on('click', '.cart', function () {
-        if ($(this).is(':empty')) {
-            let result = loadPreview();
-            result.then(function (response) {
-                $('#cart-preview').toggleClass('d-none');
+    $scope.removeItem = function (index) {
+        $http.delete('/cart/' +  $scope.cartItems[index].id)
+            .then(function (response) {
+                if (response.data.status == 'successful') {
+                    $scope.cartItems.splice(index, 1);
+                    $scope.calculateTotal();
+                } else {
+                    alert('Đã xảy ra lỗi');
+                }
             });
-        } else {
-            $('#cart-preview').toggleClass('d-none');
+    }
+
+    $scope.formatCurrency = function(num) {
+        if (num != parseFloat(num)) {
+            num = 0;
         }
-    });
+        var newstr = '';
+        num = parseFloat(num);
+        var p = num.toFixed(2).split(".");
+        var chars = p[0].split("").reverse();
+        var count = 0;
+        for (x in chars) {
+            count++;
+            if (count % 3 == 1 && count != 1) {
+                newstr = chars[x] + '.' + newstr;
+            } else {
+                newstr = chars[x] + newstr;
+            }
+        }
+
+        return newstr;
+    }
+
+    $scope.initialize();
 });

@@ -1,5 +1,5 @@
 <div class="input-group">
-    <div class="input-group-btn" id="filter">
+    <div class="input-group-btn d-none" id="filter">
         <button type="button" class="btn btn-default dropdown-toggle btn-flat hide-xs" aria-expanded="false">Lọc
             sản phẩm
             <span class="fa fa-caret-down"></span></button>

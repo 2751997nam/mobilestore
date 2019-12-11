@@ -22,7 +22,7 @@ class CustomerController extends Controller
         $data = $request->all();
         $search = $request->get('search', '');
 
-        $query = Customer::orderBy('full_name', 'asc');
+        $query = Customer::orderBy('created_at', 'desc');
         if ($search) {
             $query->where('phone', 'like',  '%'. $search . '%')
                 ->orWhere('full_name', 'like', '%' . $search . '%');
