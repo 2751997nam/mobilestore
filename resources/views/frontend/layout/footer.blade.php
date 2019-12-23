@@ -9,11 +9,11 @@
                     <div class="logo_container">
                         <div class="logo"><a href="#">NMobile</a></div>
                     </div>
-                    <div class="footer_title">Got Question? Call Us 24/7</div>
-                    <div class="footer_phone">+38 068 005 3570</div>
+                    <div class="footer_title">Liên hệ 24/7</div>
+                    <div class="footer_phone">0977 214 760</div>
                     <div class="footer_contact_text">
-                        <p>17 Princess Road, London</p>
-                        <p>Grester London NW18JR, UK</p>
+                        <p>Tổ 6, Phường Mộ Lao</p>
+                        <p>Quận Hà Đông, TP Hà Nội</p>
                     </div>
                     <div class="footer_social">
                         <ul>
@@ -29,17 +29,11 @@
 
             <div class="col-lg-2 offset-lg-2">
                 <div class="footer_column">
-                    <div class="footer_title">Find it Fast</div>
+                    <div class="footer_title">Danh mục</div>
                     <ul class="footer_list">
-                        <li><a href="#">Computers & Laptops</a></li>
-                        <li><a href="#">Cameras & Photos</a></li>
-                        <li><a href="#">Hardware</a></li>
-                        <li><a href="#">Smartphones & Tablets</a></li>
-                        <li><a href="#">TV & Audio</a></li>
-                    </ul>
-                    <div class="footer_subtitle">Gadgets</div>
-                    <ul class="footer_list">
-                        <li><a href="#">Car Electronics</a></li>
+                        @foreach($categories as $category)
+                            <li><a href="{{ $category->url }}">{{ $category->name }}</a></li>
+                        @endforeach
                     </ul>
                 </div>
             </div>
@@ -47,26 +41,20 @@
             <div class="col-lg-2">
                 <div class="footer_column">
                     <ul class="footer_list footer_list_2">
-                        <li><a href="#">Video Games & Consoles</a></li>
-                        <li><a href="#">Accessories</a></li>
-                        <li><a href="#">Cameras & Photos</a></li>
-                        <li><a href="#">Hardware</a></li>
-                        <li><a href="#">Computers & Laptops</a></li>
+
                     </ul>
                 </div>
             </div>
 
             <div class="col-lg-2">
                 <div class="footer_column">
-                    <div class="footer_title">Customer Care</div>
+                    <div class="footer_title">Chăm sóc khách hàng</div>
                     <ul class="footer_list">
-                        <li><a href="#">My Account</a></li>
-                        <li><a href="#">Order Tracking</a></li>
-                        <li><a href="#">Wish List</a></li>
-                        <li><a href="#">Customer Services</a></li>
-                        <li><a href="#">Returns / Exchange</a></li>
-                        <li><a href="#">FAQs</a></li>
-                        <li><a href="#">Product Support</a></li>
+                        <li><a href="#">Hướng dẫn đặt hàng</a></li>
+                        <li><a href="#">Các câu hỏi thường gặp</a></li>
+                        <li><a href="#">Chính sách đổi trả</a></li>
+                        <li><a href="#">Chính sách vận chuyển</a></li>
+                        <li><a href="#">Liên hệ</a></li>
                     </ul>
                 </div>
             </div>
