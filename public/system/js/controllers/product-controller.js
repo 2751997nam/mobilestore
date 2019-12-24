@@ -137,14 +137,16 @@ function ProductController($scope, $http, $rootScope, $interval, $window, Upload
         toastr.error(textErr);
     };
 
-    $scope.save = function () {
+    $scope.save = function (isQuit) {
         let data = buildProductData();
         if (productId) {
             $http.put('/api/product/' + productId, JSON.stringify(data))
             .then(function (response) {
                 if (response.data.status == 'successful') {
                     $scope.showSuccessModal('Sửa sản phẩm thành công', function () {
-                        // window.location.href = '/admin/products';
+                        if (isQuit) {
+                            window.location.href = '/admin/products';
+                        }
                     });
                 } else {
                     $scope.fail(response);
@@ -155,7 +157,9 @@ function ProductController($scope, $http, $rootScope, $interval, $window, Upload
             .then(function (response) {
                 if (response.data.status == 'successful') {
                     $scope.showSuccessModal('Thêm sản phẩm thành công', function () {
-                        // window.location.href = '/admin/products';
+                        if (isQuit) {
+                            window.location.href = '/admin/products';
+                        }
                     });
                 } else {
                     $scope.fail(response);

@@ -75,7 +75,7 @@
             <tr ng-show="products.length > 0" ng-repeat="(index, product) in products" class="product-item" ng-click="navigate(product.editUrl)">
                 <td><input type="checkbox" class="js-product-checkbox" ng-checked="false" ng-click="addSelectedProducts(product.id); $event.stopPropagation();"></td>
                 <td>@{{ meta.page_id * meta.page_size + index + 1 }}</td>
-                <td><a href="@{{ product.url }}" target="_blank">#@{{ product.sku }}</a></td>
+                <td><a href="@{{ product.editUrl }}" target="_blank">#@{{ product.sku }}</a></td>
                 <td>
                     <div class="sb-product-thumbnail" ng-if="product.image_url">
                         <img ng-src="@{{ product.display_image_url }}" :alt="product.name" class="adminImageSearch">

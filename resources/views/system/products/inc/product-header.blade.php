@@ -20,8 +20,8 @@
         <div class="col-lg-12 col-lg-offset-0">
             <div class="product-header" style="padding: 4px 0;">
                 <p class="pull-left product-title" style="margin-top: 4px;font-size: 1.6rem;color: #637381;display: none;">@{{ product.name }}</p>
-                <button type="button" name="button" class="btn btn-flat pull-right btn-primary" id="btn-save-1" ng-click="save('saveAndExit')">Lưu và đóng</button>
-                <button type="button" name="button" class="btn btn-flat pull-right btn-primary mr-3" id="btn-save-3" ng-click="save('save')">Lưu</button>                
+                <button type="button" name="button" class="btn btn-flat pull-right btn-primary" id="btn-save-1" ng-click="save(true)">Lưu và đóng</button>
+                <button type="button" name="button" class="btn btn-flat pull-right btn-primary mr-3" id="btn-save-3" ng-click="save()">Lưu</button>                
                 <a href="/admin/products" class="btn btn-flat btn-default pull-right" id="btn-cancel" style="margin: 0 10px;">Hủy</a>
             </div>
         </div>

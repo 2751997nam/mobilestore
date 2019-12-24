@@ -37,8 +37,7 @@ class HomeController extends Controller
 
     public function getPopularCategories() {
         $categories = Category::with(['products' => function ($query) {
-                $query->where('status', 'ACTIVE')
-                    ->limit(10);
+                $query->where('status', 'ACTIVE');
             }])
             ->where('is_display_home_page', 1)
             ->where('type', 'PRODUCT')

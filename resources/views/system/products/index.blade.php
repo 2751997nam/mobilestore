@@ -81,7 +81,7 @@
             <div class="nav-tabs-custom">
                 <ul class="nav nav-tabs hide-xs" style="border-bottom: 0px;">
                     <li ng-class="isFiltering == false ? 'active' : ''" ng-click="removeAllFilters()">
-                        <a href="javascript:void(0)" style="cursor: pointer">
+                        <a href="/admin/products" style="cursor: pointer">
                             Toàn bộ sản phẩm
                         </a>
                     </li>

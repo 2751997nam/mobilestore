@@ -161,8 +161,8 @@
             </div>
             <div class="product-footer" ng-show="isPage">
                 <button type="button" ng-show="mode == 'update'" name="button" class="btn btn-flat btn-lg pull-left" id="btn-delete" ng-click="delete()" >Xóa</button>
-                <button type="button" name="button" class="btn btn-flat btn-lg pull-right btn-primary"id="btn-save-2" ng-click="save('saveAndExit')">Lưu và Đóng</button>
-                <button type="button" name="button" class="btn btn-flat btn-lg pull-right btn-primary mr-3"id="btn-save-4" ng-click="save('save')">Lưu</button>
+                <button type="button" name="button" class="btn btn-flat btn-lg pull-right btn-primary"id="btn-save-2" ng-click="save(true)">Lưu và Đóng</button>
+                <button type="button" name="button" class="btn btn-flat btn-lg pull-right btn-primary mr-3"id="btn-save-4" ng-click="save()">Lưu</button>
             </div>
         </div>
     </div>
